@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
+import envConfig from "@/app/config/config";
 
 // Improved schema with additional validation rules
 const formSchema = z.object({
@@ -45,17 +46,29 @@ export default function LoginForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      // Assuming an async login function
-      console.log(values);
-      const valuesTest = "successfully login";
-      toast(
-        <pre className="mt-2 w-[340px] rounded-md  p-4">
-          <code>{JSON.stringify(valuesTest, null, 2)}</code>
-        </pre>
+      const response = await fetch(
+        `${envConfig?.NEXT_PUBLIC_API_ENDPOINT}/v1/api/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        }
       );
-    } catch (error) {
-      console.error("Form submission error", error);
-      toast.error("Failed to submit the form. Please try again.");
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Login failed");
+      }
+      toast.success("Registration successful!");
+      console.log("Success:", result);
+    } catch (error: any) {
+      // console.error("Form submission error", error);
+      toast.error(
+        error.message || "Failed to submit the form. Please try again."
+      );
     }
   }
 
