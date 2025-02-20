@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -23,55 +22,74 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { PasswordInput } from "@/components/ui/password-input";
-import envConfig from "@/app/config/config";
-import { apiRequest } from "@/utils/apiRequest";
+import { Textarea } from "@/components/ui/textarea";
 
-// Improved schema with additional validation rules
+// Schema for contact form validation
 const formSchema = z.object({
-  email: z.string().email({ message: "Invalid email address" }),
-  password: z
+  name: z
     .string()
-    .min(6, { message: "Password must be at least 6 characters long" })
-    .regex(/[a-zA-Z0-9]/, { message: "Password must be alphanumeric" }),
+    .min(2, { message: "Name must be at least 2 characters long" }),
+  email: z.string().email({ message: "Invalid email address" }),
+  message: z
+    .string()
+    .min(10, { message: "Message must be at least 10 characters long" }),
 });
 
-export default function LoginForm() {
+export default function ContactFormPreview() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "",
       email: "",
-      password: "password123",
+      message: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const result = await apiRequest("/v1/api/auth/login", "POST", values);
-      toast.success("Login successful!");
-      // console.log("Success:", result);
-    } catch (error: any) {
-      toast.error(error.message || "Failed to submit the form.");
+      console.log(values);
+      toast.success("Your message has been sent successfully!");
+    } catch (error) {
+      console.error("Error submitting contact form", error);
+      toast.error("Failed to send your message. Please try again.");
     }
   }
 
   return (
-    <div className="flex flex-col min-h-[50vh] h-full w-full items-center justify-center px-4">
-      <Card className="mx-auto max-w-sm">
+    <div className="flex min-h-[60vh] h-full w-full items-center justify-center px-4">
+      <Card className="mx-auto max-w-md">
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardTitle className="text-2xl">Contact Us</CardTitle>
           <CardDescription>
-            Enter your email and password to login to your account.
+            Please fill out the form below and we will get back to you shortly.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="space-y-8"
-              noValidate
-            >
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <div className="grid gap-4">
+                {/* Name Field */}
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem className="grid gap-2">
+                      <FormLabel htmlFor="name">Name</FormLabel>
+                      <FormControl>
+                        <Input
+                          id="name"
+                          placeholder="John Doe"
+                          type="text"
+                          autoComplete="name"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Email Field */}
                 <FormField
                   control={form.control}
                   name="email"
@@ -82,7 +100,8 @@ export default function LoginForm() {
                         <Input
                           id="email"
                           placeholder="johndoe@mail.com"
-                          type="text"
+                          type="email"
+                          autoComplete="email"
                           {...field}
                         />
                       </FormControl>
@@ -90,25 +109,19 @@ export default function LoginForm() {
                     </FormItem>
                   )}
                 />
+
+                {/* Message Field */}
                 <FormField
                   control={form.control}
-                  name="password"
+                  name="message"
                   render={({ field }) => (
                     <FormItem className="grid gap-2">
-                      <div className="flex justify-between items-center">
-                        <FormLabel htmlFor="password">Password</FormLabel>
-                        <Link
-                          href="/forgotpassword"
-                          className="ml-auto inline-block text-sm underline"
-                        >
-                          Forgot your password?
-                        </Link>
-                      </div>
+                      <FormLabel htmlFor="message">Message</FormLabel>
                       <FormControl>
-                        <PasswordInput
-                          id="password"
-                          placeholder="******"
-                          autoComplete="current-password"
+                        <Textarea
+                          id="message"
+                          placeholder="Your message..."
+                          autoComplete="off"
                           {...field}
                         />
                       </FormControl>
@@ -116,21 +129,13 @@ export default function LoginForm() {
                     </FormItem>
                   )}
                 />
+
                 <Button type="submit" className="w-full">
-                  Login
+                  Send Message
                 </Button>
-                {/* <Button variant="outline" className="w-full">
-                  Login with Google
-                </Button> */}
               </div>
             </form>
           </Form>
-          <div className="mt-4 text-center text-sm">
-            Don&apos;t have an account?{" "}
-            <Link href="#" className="underline">
-              Sign up
-            </Link>
-          </div>
         </CardContent>
       </Card>
     </div>

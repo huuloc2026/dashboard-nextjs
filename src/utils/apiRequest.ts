@@ -18,11 +18,9 @@ export async function apiRequest<T>(
     );
 
     const result: T = await response.json();
-    console.log(result);
     if (!response.ok) {
       throw new Error(result as any);
     }
-
     return result;
   } catch (error: any) {
     console.error("API Request Error:", error.message);

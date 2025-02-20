@@ -27,7 +27,7 @@ export default function Header() {
       >
         <div className="flex lg:flex-1">
           <Link href="/" className="-m-1.5 p-1.5">
-            <span className="sr-only">Flowers & Saints</span>
+            <span className="sr-only">Huu Loc</span>
             <Image
               src={fedoraLogo}
               alt="CMS Dashboard Logo"
@@ -50,7 +50,7 @@ export default function Header() {
             <Button variant="ghost">About</Button>
           </Link>
           <Link
-            href="/#"
+            href="/contact"
             className="text-sm font-semibold leading-6 text-foreground hover:text-primary transition-colors"
           >
             <Button variant="ghost">Contact</Button>
