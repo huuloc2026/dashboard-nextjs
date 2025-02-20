@@ -25,6 +25,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import envConfig from "@/app/config/config";
+import { apiRequest } from "@/utils/apiRequest";
 
 // Improved schema with additional validation rules
 const formSchema = z.object({
@@ -40,35 +41,17 @@ export default function LoginForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
-      password: "",
+      password: "password123",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response = await fetch(
-        `${envConfig?.NEXT_PUBLIC_API_ENDPOINT}/v1/api/auth/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(values),
-        }
-      );
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || "Login failed");
-      }
-      toast.success("Registration successful!");
+      const result = await apiRequest("/v1/api/auth/login", "POST", values);
+      toast.success("Login successful!");
       console.log("Success:", result);
     } catch (error: any) {
-      // console.error("Form submission error", error);
-      toast.error(
-        error.message || "Failed to submit the form. Please try again."
-      );
+      toast.error(error.message || "Failed to submit the form.");
     }
   }
 
