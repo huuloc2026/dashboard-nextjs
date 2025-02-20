@@ -1,51 +1,83 @@
 "use client";
-
-import { Home, User, BarChart2, PlusCircle, Settings } from "lucide-react";
+import { Home, User, PackageSearch, Wallet, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-import { useState, useEffect } from "react";
+import Image from "next/image";
+import avatar from "/public/Fedora.png"; // Thay bằng đường dẫn ảnh thực tế
 import Link from "next/link";
 
 const Sidebar = () => {
   return (
-    <div className="w-64 bg-card h-screen p-4 hidden lg:block border-r border-border">
-      <h2 className="text-2xl font-bold mb-6 text-primary">Admin Dashboard </h2>
-      <nav>
+    <aside className="w-64 bg-card h-screen p-4 hidden lg:flex flex-col border-r border-border">
+      {/* Logo */}
+      <h2 className="text-2xl font-bold mb-6 text-primary">Admin Dashboard</h2>
+
+      {/* Avatar + User */}
+      <div className="flex items-center bg-muted p-3 rounded-lg mb-4">
+        <div className="w-10 h-10 rounded-full overflow-hidden border border-border">
+          <Image
+            src={avatar}
+            alt="User Avatar"
+            width={40}
+            height={40}
+            className="object-cover"
+          />
+        </div>
+        <h3 className="ml-3 text-lg font-semibold text-muted-foreground">
+          Hello, user!
+        </h3>
+      </div>
+
+      {/* Navigation */}
+      <nav className="flex-1">
         <ul className="space-y-2">
           <li>
-            <Button variant="ghost" className="w-full justify-start">
+            <Link
+              href="/dashboard/"
+              className="flex items-center w-full p-2 rounded-lg hover:bg-muted"
+            >
               <Home className="mr-2 h-4 w-4" />
-              <Link href="/dashboard">Dashboard</Link>
-            </Button>
+              Dashboard
+            </Link>
           </li>
           <li>
-            <Button variant="ghost" className="w-full justify-start">
-              <User className="mr-2 h-4 w-4" />
-              Post
-            </Button>
+            <Link
+              href="/dashboard/product"
+              className="flex items-center w-full p-2 rounded-lg hover:bg-muted"
+            >
+              <PackageSearch className="mr-2 h-4 w-4" />
+              Product
+            </Link>
           </li>
           <li>
-            <Button variant="ghost" className="w-full justify-start">
+            <Link
+              href="/dashboard/user"
+              className="flex items-center w-full p-2 rounded-lg hover:bg-muted"
+            >
               <User className="mr-2 h-4 w-4" />
               User
-            </Button>
+            </Link>
           </li>
           <li>
-            <Button variant="ghost" className="w-full justify-start">
-              <PlusCircle className="mr-2 h-4 w-4" />
-              New Listings
-            </Button>
+            <Link
+              href="/dashboard/billing"
+              className="flex items-center w-full p-2 rounded-lg hover:bg-muted"
+            >
+              <Wallet className="mr-2 h-4 w-4" />
+              Billing
+            </Link>
           </li>
           <li>
-            <Button variant="ghost" className="w-full justify-start">
+            <Link
+              href="/dashboard/setting"
+              className="flex items-center w-full p-2 rounded-lg hover:bg-muted"
+            >
               <Settings className="mr-2 h-4 w-4" />
-              Settings
-            </Button>
+              Setting
+            </Link>
           </li>
         </ul>
       </nav>
-    </div>
+    </aside>
   );
 };
 

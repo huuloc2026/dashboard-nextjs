@@ -6,9 +6,12 @@ export default function DashBoardLayoutRoot({
   children: React.ReactNode;
 }>) {
   return (
-    <main>
+    <div className="flex min-h-screen bg-background text-foreground">
+      {/* Sidebar bên trái */}
       <Sidebar />
-      {children}
-    </main>
+
+      {/* Nội dung chính */}
+      <main className="flex-1 p-4">{children}</main>
+    </div>
   );
 }

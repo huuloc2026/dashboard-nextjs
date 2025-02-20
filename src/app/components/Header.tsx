@@ -5,8 +5,9 @@ import Link from "next/link";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
 import { MoonIcon, SunIcon } from "@heroicons/react/24/outline";
-import fedoraLogo from "../../../public/Fedora.png";
+import fedoraLogo from "../../../public/husky-svgrepo-com.svg";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 export default function Header() {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
@@ -30,35 +31,29 @@ export default function Header() {
             <Image
               src={fedoraLogo}
               alt="CMS Dashboard Logo"
-              width={32} // Set width (h-8 means 32px in tailwind)
-              height={32} // Set height (w-auto, will scale proportionally)
+              width={50} // Set width (h-8 means 32px in tailwind)
+              height={50} // Set height (w-auto, will scale proportionally)
             />
           </Link>
         </div>
         <div className="flex gap-x-12">
           <Link
             href="/dashboard"
-            target="_blank"
-            rel="noopener noreferrer"
             className="text-sm font-semibold leading-6 text-foreground hover:text-primary transition-colors"
           >
-            Dashboard
+            <Button variant="ghost">Dashboard</Button>
           </Link>
           <Link
             href="/#"
-            target="_blank"
-            rel="noopener noreferrer"
             className="text-sm font-semibold leading-6 text-foreground hover:text-primary transition-colors"
           >
-            About
+            <Button variant="ghost">About</Button>
           </Link>
           <Link
             href="/#"
-            target="_blank"
-            rel="noopener noreferrer"
             className="text-sm font-semibold leading-6 text-foreground hover:text-primary transition-colors"
           >
-            Contact
+            <Button variant="ghost">Contact</Button>
           </Link>
         </div>
         <div className="flex flex-1 justify-end">
