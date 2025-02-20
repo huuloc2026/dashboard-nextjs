@@ -14,6 +14,9 @@ export default function Home() {
       </Button>
 
       <Button asChild>
+        <Link href="/resetpassword">Change Password</Link>
+      </Button>
+      <Button asChild>
         <Link href="/me">me</Link>
       </Button>
     </>
