@@ -9,6 +9,28 @@ import fedoraLogo from "../../../public/husky-svgrepo-com.svg";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 export default function Header() {
+  const headerDraft = [
+    {
+      title: "About",
+      link: "/about",
+    },
+    {
+      title: "Dashboard",
+      link: "/dashboard",
+    },
+    {
+      title: "Contact",
+      link: "/contact",
+    },
+    {
+      title: "Login",
+      link: "/login",
+    },
+    {
+      title: "Register",
+      link: "/register",
+    },
+  ];
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
 
@@ -37,24 +59,16 @@ export default function Header() {
           </Link>
         </div>
         <div className="flex gap-x-12">
-          <Link
-            href="/dashboard"
-            className="text-sm font-semibold leading-6 text-foreground hover:text-primary transition-colors"
-          >
-            <Button variant="ghost">Dashboard</Button>
-          </Link>
-          <Link
-            href="/#"
-            className="text-sm font-semibold leading-6 text-foreground hover:text-primary transition-colors"
-          >
-            <Button variant="ghost">About</Button>
-          </Link>
-          <Link
-            href="/contact"
-            className="text-sm font-semibold leading-6 text-foreground hover:text-primary transition-colors"
-          >
-            <Button variant="ghost">Contact</Button>
-          </Link>
+          {headerDraft.map((item) => {
+            return (
+              <Link
+                href={item.link}
+                className="text-sm font-semibold leading-6 text-foreground hover:text-primary transition-colors"
+              >
+                <Button variant="ghost">{item.title}</Button>
+              </Link>
+            );
+          })}
         </div>
         <div className="flex flex-1 justify-end">
           {mounted && (

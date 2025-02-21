@@ -17,13 +17,17 @@ export async function apiRequest<T>(
       }
     );
 
-    const result: T = await response.json();
+    const result = await response.json();
+
+    const res = { status: response.status, payload: result };
+
     if (!response.ok) {
-      throw new Error(result as any);
+      throw res.payload.message;
     }
+    console.log(result);
     return result;
   } catch (error: any) {
-    console.error("API Request Error:", error.message);
-    throw new Error(error.message || "Something went wrong");
+    console.error("API Request Error:", error);
+    throw new Error(error || "Something went wrong");
   }
 }

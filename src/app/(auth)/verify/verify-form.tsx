@@ -70,7 +70,7 @@ export default function OTPPreview() {
       }
 
       toast.error(errorMessage);
-      console.error("API Error:", error);
+      //   console.error("API Error:", error);
     }
   }
 

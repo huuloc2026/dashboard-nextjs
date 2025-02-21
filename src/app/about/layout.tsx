@@ -1,6 +1,6 @@
 import { Toaster } from "sonner";
 
-export default function Authlayout({
+export default function AboutLayoutRoot({
   children,
 }: Readonly<{
   children: React.ReactNode;
