@@ -1,3 +1,4 @@
+import AboutPreview from "@/app/about/About-ui";
 import Marquee from "@/app/components/Marquee";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -7,7 +8,8 @@ import React from "react";
 const About = () => {
   return (
     <>
-      <div className="space-x-10 p-2">
+      <AboutPreview />
+      {/* <div className="space-x-10 p-2">
         <Button asChild>
           <Link href="/login">Login</Link>
         </Button>
@@ -25,10 +27,7 @@ const About = () => {
         <Button asChild>
           <Link href="/verify">verify</Link>
         </Button>
-      </div>
-      <div>
-        <Marquee />
-      </div>
+      </div> */}
     </>
   );
 };
