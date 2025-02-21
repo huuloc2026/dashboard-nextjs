@@ -176,6 +176,74 @@ export default function UserList({
             </div>
           ))}
         </div>
+        <div className="p-2 border-t border-zinc-100 dark:border-zinc-800">
+          <div className="grid grid-cols-4 gap-2">
+            <button
+              type="button"
+              className={cn(
+                "flex items-center justify-center gap-2",
+                "py-2 px-3 rounded-lg",
+                "text-xs font-medium",
+                "bg-zinc-900 dark:bg-zinc-50",
+                "text-zinc-50 dark:text-zinc-900",
+                "hover:bg-zinc-800 dark:hover:bg-zinc-200",
+                "shadow-sm hover:shadow",
+                "transition-all duration-200"
+              )}
+            >
+              <Plus className="w-3.5 h-3.5" />
+              <span>Add</span>
+            </button>
+            <button
+              type="button"
+              className={cn(
+                "flex items-center justify-center gap-2",
+                "py-2 px-3 rounded-lg",
+                "text-xs font-medium",
+                "bg-zinc-900 dark:bg-zinc-50",
+                "text-zinc-50 dark:text-zinc-900",
+                "hover:bg-zinc-800 dark:hover:bg-zinc-200",
+                "shadow-sm hover:shadow",
+                "transition-all duration-200"
+              )}
+            >
+              <ShoppingCart className="w-3.5 h-3.5" />
+              <span>Buy</span>
+            </button>
+            <button
+              type="button"
+              className={cn(
+                "flex items-center justify-center gap-2",
+                "py-2 px-3 rounded-lg",
+                "text-xs font-medium",
+                "bg-zinc-900 dark:bg-zinc-50",
+                "text-zinc-50 dark:text-zinc-900",
+                "hover:bg-zinc-800 dark:hover:bg-zinc-200",
+                "shadow-sm hover:shadow",
+                "transition-all duration-200"
+              )}
+            >
+              <CreditCard className="w-3.5 h-3.5" />
+              <span>Pay</span>
+            </button>
+            <button
+              type="button"
+              className={cn(
+                "flex items-center justify-center gap-2",
+                "py-2 px-3 rounded-lg",
+                "text-xs font-medium",
+                "bg-zinc-900 dark:bg-zinc-50",
+                "text-zinc-50 dark:text-zinc-900",
+                "hover:bg-zinc-800 dark:hover:bg-zinc-200",
+                "shadow-sm hover:shadow",
+                "transition-all duration-200"
+              )}
+            >
+              <ArrowRight className="w-3.5 h-3.5" />
+              <span>More</span>
+            </button>
+          </div>
+        </div>
 
         {/* CRUD Buttons */}
         {/* <div className="p-2 border-t border-zinc-100 dark:border-zinc-800">

@@ -12,7 +12,7 @@ const Sidebar = () => {
       <h2 className="text-2xl font-bold mb-6 text-primary">Admin Dashboard</h2>
 
       {/* Avatar + User */}
-      <div className="flex items-center bg-muted p-3 rounded-lg mb-4">
+      <div className="flex items-center  p-3 rounded-2xl mb-4 bg-white dark:bg-zinc-900/70  ">
         <div className="w-10 h-10 rounded-full overflow-hidden border border-border">
           <Image
             src={avatar}
@@ -22,9 +22,7 @@ const Sidebar = () => {
             className="object-cover"
           />
         </div>
-        <h3 className="ml-3 text-lg font-semibold text-muted-foreground">
-          Hello, user!
-        </h3>
+        <h3 className="ml-3 text-lg font-semibold ">Hello, user!</h3>
       </div>
 
       {/* Navigation */}
