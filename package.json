@@ -1,6 +1,11 @@
 {
   "name": "cms-admin-nextjs-2025",
   "version": "0.1.0",
+  "author": {
+    "name": "huuloc2026",
+    "email": "huuloc2026@gmail.com",
+    "url": "https://github.com/huuloc2026"
+  },
   "private": true,
   "scripts": {
     "dev": "next dev",
