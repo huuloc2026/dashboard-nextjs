@@ -4,6 +4,15 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import avatar from "/public/Fedora.png"; // Thay bằng đường dẫn ảnh thực tế
 import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Sidebar = () => {
   return (
@@ -11,19 +20,39 @@ const Sidebar = () => {
       {/* Logo */}
       <h2 className="text-2xl font-bold mb-6 text-primary">Admin Dashboard</h2>
 
-      {/* Avatar + User */}
-      <div className="flex items-center  p-3 rounded-2xl mb-4 bg-white dark:bg-zinc-900/70  ">
-        <div className="w-10 h-10 rounded-full overflow-hidden border border-border">
-          <Image
-            src={avatar}
-            alt="User Avatar"
-            width={40}
-            height={40}
-            className="object-cover"
-          />
-        </div>
-        <h3 className="ml-3 text-lg font-semibold ">Hello, user!</h3>
-      </div>
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          {/* Avatar + User */}
+          <div className="flex items-center  p-3 rounded-2xl mb-4 bg-white dark:bg-zinc-900/70  ">
+            <div className="w-10 h-10 rounded-full overflow-hidden border border-border">
+              <Avatar>
+                <AvatarImage
+                  src="https://img.freepik.com/free-psd/contact-icon-illustration-isolated_23-2151903337.jpg"
+                  alt="User Avatar"
+                />
+                <AvatarFallback>BT</AvatarFallback>
+              </Avatar>
+            </div>
+            <h3 className="ml-3 text-lg font-semibold ">Hello, user!</h3>
+          </div>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <Link href="/">
+            {" "}
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+          </Link>
+          <Link href="/">
+            {" "}
+            <DropdownMenuItem>Billing</DropdownMenuItem>
+          </Link>
+          <Link href="/login">
+            {" "}
+            <DropdownMenuItem>Log Out</DropdownMenuItem>
+          </Link>
+        </DropdownMenuContent>
+      </DropdownMenu>
 
       {/* Navigation */}
       <nav className="flex-1">
