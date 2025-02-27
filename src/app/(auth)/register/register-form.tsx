@@ -52,7 +52,7 @@ export default function RegisterForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const result = await apiRequest("/v1/api/auth/register", "POST", values);
+      const result = await apiRequest("/auth/register", "POST", values);
       toast.success("Registration successful!");
       console.log("Success:", result);
     } catch (error: any) {

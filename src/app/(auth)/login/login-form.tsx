@@ -26,6 +26,7 @@ import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import envConfig from "@/app/config/config";
 import { apiRequest } from "@/utils/apiRequest";
+import { useAppContext } from "@/app/AppProvider";
 
 // Improved schema with additional validation rules
 const formSchema = z.object({
@@ -37,18 +38,31 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
+  const { setAccessToken } = useAppContext();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
+      email: "kywyru@mailinator.com",
       password: "password123",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const result = await apiRequest("/v1/api/auth/login", "POST", values);
+      const result = await apiRequest("/auth/login", "POST", values);
+
       toast.success("Login successful!");
+      //Server Nextjs
+      const setToken = await fetch("http://localhost:3000/api/auth", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ result }),
+      });
+      const data = await setToken.json();
+      setAccessToken(data.token);
+      // setAccessToken(data);
       // console.log("Success:", result);
     } catch (error: any) {
       toast.error(error.message || "Failed to submit the form.");

@@ -5,6 +5,8 @@ import "./globals.css";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { ThemeProvider } from "@/app/components/theme-provider";
+import AppProvider from "@/app/AppProvider";
+import { cookies } from "next/headers";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
@@ -13,21 +15,25 @@ export const metadata: Metadata = {
   icons: "/husky-svgrepo-com.svg",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken");
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div className="flex flex-col min-h-screen">
             <Header />
-            <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-6">
-              {children}
-            </main>
-            <Footer />
+            <AppProvider initialAccessToken={accessToken?.value}>
+              <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                {children}
+              </main>
+              <Footer />
+            </AppProvider>
           </div>
         </ThemeProvider>
         <Toaster />

@@ -24,10 +24,10 @@ export async function apiRequest<T>(
     if (!response.ok) {
       throw res.payload.message;
     }
-    console.log(result);
+
     return result;
   } catch (error: any) {
     console.error("API Request Error:", error);
-    throw new Error(error || "Something went wrong");
+    return Promise.reject(error);
   }
 }

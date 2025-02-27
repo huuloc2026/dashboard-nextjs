@@ -51,7 +51,7 @@ export default function OTPPreview() {
         email: "qehypyby@mailinator.com",
         verifyCode: values.code,
       };
-      const result = await apiRequest("/v1/api/auth/verify", "POST", data);
+      const result = await apiRequest("/auth/verify", "POST", data);
       toast.success("verify successful!");
       return result;
       //   console.log("Success:", result);
