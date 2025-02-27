@@ -5,7 +5,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-
+import { useRouter } from "next/navigation";
 import {
   Form,
   FormControl,
@@ -27,6 +27,7 @@ import { PasswordInput } from "@/components/ui/password-input";
 import envConfig from "@/app/config/config";
 import { apiRequest } from "@/utils/apiRequest";
 import { useAppContext } from "@/app/AppProvider";
+import { redirect } from "next/navigation";
 
 // Improved schema with additional validation rules
 const formSchema = z.object({
@@ -39,6 +40,7 @@ const formSchema = z.object({
 
 export default function LoginForm() {
   const { setAccessToken } = useAppContext();
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -62,6 +64,8 @@ export default function LoginForm() {
       });
       const data = await setToken.json();
       setAccessToken(data.token);
+      router.push("/dashboard");
+
       // setAccessToken(data);
       // console.log("Success:", result);
     } catch (error: any) {

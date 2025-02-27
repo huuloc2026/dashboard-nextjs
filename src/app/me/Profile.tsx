@@ -7,7 +7,11 @@ const Profile = () => {
 
   return (
     <div className="text-white ">
-      {accessToken ? `Your token: ${accessToken}` : "No token found"}
+      Your token is:
+      <br />
+      <div className="text-red-500 ">
+        {accessToken ? ` ${accessToken}` : "No token found"}
+      </div>
     </div>
   );
 };
