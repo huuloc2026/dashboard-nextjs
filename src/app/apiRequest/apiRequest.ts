@@ -128,14 +128,14 @@ export class ApiRequest {
   //   }
 
   //   // 🛒 CRUD PRODUCT API
-  //   async createProduct(data: { name: string; price: number; stock: number }) {
-  //     return httpClient(`${this.baseUrl}/products`, "POST", data, {
-  //       token: this.token!,
-  //     });
-  //   }
+  async createProduct(data: any, token: any) {
+    return await httpClient(`${this.baseUrl}/product`, "POST", data, {
+      token,
+    });
+  }
 
   async getProducts(token: any) {
-    return httpClient(
+    return await httpClient(
       `${this.baseUrl}/product?page=1&limit=5`,
       "GET",
       undefined,

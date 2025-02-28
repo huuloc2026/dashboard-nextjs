@@ -10,7 +10,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 export interface formData {
   id: string;
   name: string;
@@ -29,6 +37,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import { ApiRequest } from "@/app/apiRequest/apiRequest";
 let productRenderJSON = [
   {
     id: "2af85ba0-0d4d-4b42-8e6e-297646c79e34",
@@ -83,7 +92,9 @@ let productRenderJSON = [
     updatedAt: "2025-02-28T11:18:13.997Z",
   },
 ];
-
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/AuthProvider";
 // let productsData: formData[] = [
 //   {
 //     name: "Laptop Pro X1",
@@ -116,125 +127,170 @@ let productRenderJSON = [
 //     categories: "Books, Cooking",
 //   },
 // ];
-const productSchema = z.object({
-  id: z.string().uuid(),
-  name: z.string().min(1),
-  description: z.string(),
-  price: z.number().positive(),
-  stock: z.number().int().nonnegative(),
-  imageUrl: z.string().nullable(),
-  categoryId: z.string().uuid(),
-  status: z.enum(["ACTIVE", "INACTIVE"]),
-  createdAt: z.string().datetime(),
-  updatedAt: z.string().datetime(),
+const formSchema = z.object({
+  name: z.string().min(1, "Product name is required"),
+  price: z.number().positive("Price must be greater than zero"),
+  stock: z.number().int().nonnegative("Stock must be a non-negative integer"),
+  description: z.string().optional(),
+  // id: z.string().uuid().optional(),
+  // imageUrl: z.string().nullable().optional(),
+  categoryId: z.string().uuid().optional(),
+  // status: z.enum(["ACTIVE", "INACTIVE"]).default("ACTIVE"),
+  // createdAt: z.string().optional(),
+  // updatedAt: z.string().optional(),
 });
 
-const formSchema = z.object({
-  product: productSchema,
-});
 const ProductCRUD = () => {
+  const { token } = useAuth();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      price: 0,
+      stock: 0,
+      description: "",
+      categoryId: "",
+      // id: "",
+      // imageUrl: null,
+      // categoryId: "",
+      // status: "ACTIVE",
+      // createdAt: new Date().toISOString(),
+      // updatedAt: new Date().toISOString(),
+    },
   });
   const [products, setProducts] = useState(productRenderJSON);
   const [formData, setFormData] = useState<formData[]>();
   const [editingId, setEditingId] = useState(null);
+  const router = useRouter();
 
-  //   useEffect(() => {
-  //     fetchProducts();
-  //   }, []);
-
-  //   const fetchProducts = async () => {
-  //     try {
-  //       //   const data = await apiRequest("/products");
-  //       //   setProducts(data);
-  //     } catch (error) {
-  //       console.error("Failed to fetch products", error);
-  //     }
-  //   };
-
-  const handleInputChange = () => {
-    // setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async () => {
-    // e.preventDefault();
-    // try {
-    //   if (editingId) {
-    //     await apiRequest(`/products/${editingId}`, "PUT", formData);
-    //   } else {
-    //     await apiRequest("/products", "POST", formData);
-    //   }
-    //   setFormData({ name: "", price: "" });
-    //   setEditingId(null);
-    //   fetchProducts();
-    // } catch (error) {
-    //   console.error("Failed to save product", error);
-    // }
-  };
-
-  const handleEdit = () => {
-    // setFormData({ name: product.name, price: product.price });
-    // setEditingId(product.id);
-  };
-
-  //   const handleDelete = async (id) => {
-  //     // try {
-  //     //   await apiRequest(`/products/${id}`, "DELETE");
-  //     //   fetchProducts();
-  //     // } catch (error) {
-  //     //   console.error("Failed to delete product", error);
-  //     // }
-  //   };
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // try {
-    //   const api = ApiRequest.getInstance();
-    //   await api.login(values.email, values.password);
-    //   toast.success("Login successful!");
-    //   router.push("/dashboard");
-    //   // setAccessToken(data);
-    //   // console.log("Success:", result);
-    // } catch (error: any) {
-    //   toast.error(error.message || "Failed to submit the form.");
-    // }
+    try {
+      const api = ApiRequest.getInstance();
+      await api.createProduct(values, token);
+      console.log(api);
+      toast.success("Created successful!");
+      router.push("/dashboard");
+    } catch (error: any) {
+      toast.error(error.message || "Failed to submit the form.");
+    }
   }
   return (
     <div>
-      <Card>
+      <Card className="min-w-[50dvh]">
         <CardHeader>
           <CardTitle className="text-2xl">{"Add Product"}</CardTitle>
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="space-y-8"
-              noValidate
-            >
-              <div className="grid gap-4">
-                <FormField
-                  control={form.control}
-                  name="product.name"
-                  render={({ field }) => (
-                    <FormItem className="grid gap-2">
-                      <FormLabel>Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          id="name"
-                          placeholder="Product Name"
-                          type="text"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              {/* Name */}
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Product Name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                <Button type="submit" className="w-full">
-                  Login
-                </Button>
-              </div>
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Product Description" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Price */}
+              <FormField
+                control={form.control}
+                name="price"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Price</FormLabel>
+                    <FormControl>
+                      <Input
+                        id="price"
+                        placeholder="Enter price"
+                        type="number"
+                        {...field}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Stock */}
+              <FormField
+                control={form.control}
+                name="stock"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Stock</FormLabel>
+                    <FormControl>
+                      <Input
+                        id="stock"
+                        placeholder="Enter stock"
+                        type="number"
+                        {...field}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Category */}
+              <FormField
+                control={form.control}
+                name="categoryId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <Select onValueChange={field.onChange}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select Category" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="d94f2730-e9cf-44e8-8e7a-f1fa129dc463">
+                          Electronics
+                        </SelectItem>
+                        <SelectItem value="a83d9782-621f-4da3-8aca-05ad7d461213">
+                          Clothing
+                        </SelectItem>
+                        <SelectItem value="eb17be2b-6809-4811-83a6-173ede6c46d0">
+                          Books
+                        </SelectItem>
+                        <SelectItem value="ac85a058-48b1-44b4-8883-8c7e99e2d5a6">
+                          Home Appliances
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Submit button */}
+              <Button type="submit" className="w-full">
+                Add Product
+              </Button>
             </form>
           </Form>
         </CardContent>
