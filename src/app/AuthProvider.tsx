@@ -13,6 +13,7 @@ import {
 interface User {
   name: string;
   email: string;
+  id: string;
 }
 interface AuthContextType {
   token: string | null;

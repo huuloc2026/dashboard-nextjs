@@ -20,6 +20,7 @@ interface User {
   email: string;
   avatar?: string;
   balance: string;
+  role: string;
 }
 
 interface UserListProps {
@@ -34,6 +35,7 @@ const INITIAL_USERS: User[] = [
     email: "alice@mail.com",
     avatar: "/user.svg",
     balance: "$10,500.75",
+    role: "CLIENT",
   },
   {
     id: "2",
@@ -41,6 +43,7 @@ const INITIAL_USERS: User[] = [
     email: "bob@mail.com",
     avatar: "/user.svg",
     balance: "$7,320.00",
+    role: "CLIENT",
   },
   {
     id: "3",
@@ -48,6 +51,7 @@ const INITIAL_USERS: User[] = [
     email: "charlie@mail.com",
     avatar: "/user.svg",
     balance: "$15,200.90",
+    role: "CLIENT",
   },
   {
     id: "4",
@@ -55,6 +59,7 @@ const INITIAL_USERS: User[] = [
     email: "diana@mail.com",
     avatar: "/user.svg",
     balance: "$5,879.65",
+    role: "CLIENT",
   },
   {
     id: "5",
@@ -62,6 +67,7 @@ const INITIAL_USERS: User[] = [
     email: "ethan@mail.com",
     avatar: "/user.svg",
     balance: "$2,430.20",
+    role: "CLIENT",
   },
 ];
 
@@ -169,9 +175,9 @@ export default function UserList({
 
               <div className="flex items-center gap-3">
                 <span className="text-xs font-medium text-zinc-900 dark:text-zinc-100">
-                  {user.balance}
+                  Role: {user.role}
                 </span>
-                <button
+                {/* <button
                   className="text-blue-600 dark:text-blue-400"
                   onClick={() => editUser(user.id)}
                 >
@@ -182,12 +188,12 @@ export default function UserList({
                   onClick={() => deleteUser(user.id)}
                 >
                   <Trash2 className="w-4 h-4" />
-                </button>
+                </button> */}
               </div>
             </div>
           ))}
         </div>
-        <div className="p-2 border-t border-zinc-100 dark:border-zinc-800">
+        {/* <div className="p-2 border-t border-zinc-100 dark:border-zinc-800">
           <div className="grid grid-cols-4 gap-2">
             <button
               type="button"
@@ -254,7 +260,7 @@ export default function UserList({
               <span>More</span>
             </button>
           </div>
-        </div>
+        </div> */}
 
         {/* CRUD Buttons */}
         {/* <div className="p-2 border-t border-zinc-100 dark:border-zinc-800">

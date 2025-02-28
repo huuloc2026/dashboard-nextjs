@@ -147,7 +147,7 @@ export default function ListProduct({ className }: ListProductProps) {
         )}
       </div>
 
-      <div className="p-2 border-t border-zinc-100 dark:border-zinc-800 grid grid-cols-4 gap-2">
+      {/* <div className="p-2 border-t border-zinc-100 dark:border-zinc-800 grid grid-cols-4 gap-2">
         {[
           { icon: Plus, label: "Add" },
           { icon: ShoppingCart, label: "Buy" },
@@ -163,7 +163,7 @@ export default function ListProduct({ className }: ListProductProps) {
             <span>{label}</span>
           </button>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }

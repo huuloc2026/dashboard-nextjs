@@ -1,10 +1,10 @@
 "use client";
 
 import { useAuth } from "@/app/AuthProvider";
-import React, { useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 
 const HelloUser = () => {
-  const { user } = useAuth();
+  const { token, user } = useAuth();
 
   return <div>Hello, {user ? user.name : "Guest"}</div>;
 };
