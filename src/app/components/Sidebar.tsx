@@ -10,13 +10,27 @@ import {
 
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
 import { useAuth } from "@/app/AuthProvider";
-import HelloUser from "@/app/components/HelloUser";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useEffect, useState } from "react";
+
+type User = {
+  id: string;
+  name: string;
+  email: string;
+};
 
 const Sidebar = () => {
+  const token = useAuth();
+
+  if (!token) return;
+  const [user, setUser] = useState(token?.user?.name);
+  useEffect(() => {
+    if (token.user?.name) {
+      setUser(token?.user?.name);
+    }
+  }, [token, token?.user?.name]);
   const router = useRouter();
   const handleLogout = async () => {
     try {
@@ -31,7 +45,7 @@ const Sidebar = () => {
     }
   };
   return (
-    <aside className="w-64 bg-card h-screen p-4 hidden lg:flex flex-col border-r border-border">
+    <aside className="w-96 bg-card h-screen p-4 hidden lg:flex flex-col border-r border-border">
       {/* Logo */}
       <h2 className="text-2xl font-bold mb-6 text-primary">Admin Dashboard</h2>
       {/* Avatar + User */}
@@ -45,9 +59,9 @@ const Sidebar = () => {
             <AvatarFallback>BT</AvatarFallback>
           </Avatar>
         </div>
-        <h3 className="ml-3 text-lg font-semibold ">
-          <HelloUser />
-        </h3>
+        <span className="w-full ml-3 text-sm font-semibold ">
+          <span className="flex">Hello, {user ? user : "Guest"}</span>
+        </span>
       </div>
 
       {/* Navigation */}
@@ -80,7 +94,7 @@ const Sidebar = () => {
               User
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link
               href="/dashboard/billing"
               className="flex items-center w-full p-2 rounded-lg hover:bg-muted"
@@ -88,7 +102,7 @@ const Sidebar = () => {
               <Wallet className="mr-2 h-4 w-4" />
               Billing
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link
               href="/dashboard/setting"

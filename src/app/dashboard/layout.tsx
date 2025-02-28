@@ -12,8 +12,8 @@ export default function DashBoardLayoutRoot({
         <Sidebar />
 
         {/* Nội dung chính */}
-        <main className="container mx-auto p-5 flex flex-col ">
-          <div className="flex flex-col min-h-screen p-2 ">{children}</div>
+        <main className="flex-1 flex flex-col p-5">
+          <div className="flex-1 flex flex-col overflow-hidden">{children}</div>
         </main>
       </div>
     </div>

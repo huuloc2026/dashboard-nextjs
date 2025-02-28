@@ -18,8 +18,8 @@ interface User {
 interface AuthContextType {
   token: string | null;
   user: User | null;
-  // login: (email: string, password: string) => Promise<void>;
-  // logout: () => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -27,7 +27,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<User | null>(null);
-  useEffect(() => {
+  useLayoutEffect(() => {
     async function fetchToken() {
       try {
         const response = await fetch("/api/auth/me", {
@@ -50,15 +50,30 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } catch (error) {
         console.error("Not logged in");
         setToken(null);
+        setUser(null);
       }
     }
-
     fetchToken();
   }, []);
 
   async function login(email: string, password: string) {
-    const user = await ApiRequest.getInstance().login(email, password);
-    setToken(user.token);
+    try {
+      const api = ApiRequest.getInstance();
+      const data = await api.login(email, password);
+      console.log(data.token);
+      setToken(data.token);
+      // Fetch lại user mới
+      const userData = await httpClient(
+        "http://localhost:8386/v1/api/auth/me",
+        "GET",
+        null,
+        { token: data.token }
+      );
+      setUser(userData);
+    } catch (error) {
+      console.error("Login failed:", error);
+      throw error;
+    }
   }
 
   async function logout() {
@@ -67,7 +82,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ token, user }}>
+    <AuthContext.Provider value={{ token, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -26,6 +26,7 @@ import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 
 import { ApiRequest } from "@/app/apiRequest/apiRequest";
+import { useAuth } from "@/app/AuthProvider";
 
 // Improved schema with additional validation rules
 const formSchema = z.object({
@@ -46,10 +47,14 @@ export default function LoginForm() {
     },
   });
 
+  const { login } = useAuth();
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const api = ApiRequest.getInstance();
-      await api.login(values.email, values.password);
+      await login(values.email, values.password); // Gọi login từ context
+
+      // const api = ApiRequest.getInstance();
+      // await api.login(values.email, values.password);
 
       toast.success("Login successful!");
 

@@ -24,12 +24,7 @@ export function PersonalInfo() {
   const [name, setName] = useState(token.user?.name || "");
   const [email, setEmail] = useState(token.user?.email || "");
   const [isEdit, setIsEdit] = useState(true);
-  useEffect(() => {
-    if (token.user) {
-      setName(token.user.name || "");
-      setEmail(token.user.email || "");
-    }
-  }, [token.user]);
+
   const handleUpdate = async () => {
     if (!token?.user?.id) {
       toast.error("User not authenticated!");
