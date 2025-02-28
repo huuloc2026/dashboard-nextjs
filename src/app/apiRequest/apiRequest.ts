@@ -154,11 +154,11 @@ export class ApiRequest {
   //     });
   //   }
 
-  //   async deleteProduct(productId: string) {
-  //     return httpClient(`${this.baseUrl}/products/${productId}`, "DELETE", null, {
-  //       token: this.token!,
-  //     });
-  //   }
+  async deleteProduct(productId: string) {
+    return httpClient(`${this.baseUrl}/products/${productId}`, "DELETE", null, {
+      token: this.token!,
+    });
+  }
 }
 
 export default ApiRequest.getInstance();

@@ -158,18 +158,16 @@ const ProductCRUD = () => {
       // updatedAt: new Date().toISOString(),
     },
   });
-  const [products, setProducts] = useState(productRenderJSON);
-  const [formData, setFormData] = useState<formData[]>();
-  const [editingId, setEditingId] = useState(null);
+
   const router = useRouter();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       const api = ApiRequest.getInstance();
       await api.createProduct(values, token);
-      console.log(api);
       toast.success("Created successful!");
-      router.push("/dashboard");
+      form.reset();
+      router.refresh();
     } catch (error: any) {
       toast.error(error.message || "Failed to submit the form.");
     }

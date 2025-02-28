@@ -1,7 +1,14 @@
 "use client";
 
 import { TrendingUp } from "lucide-react";
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+} from "recharts";
 
 import {
   Card,
@@ -17,16 +24,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-];
-
+import _ from "lodash";
 const chartConfig = {
   desktop: {
     label: "Desktop",
@@ -38,7 +36,15 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function ChartArea() {
+export function ChartArea({ dataFromFetch }: { dataFromFetch: any }) {
+  const chartData = dataFromFetch.map(
+    (product: { createdAt: any; price: number; stock: number }) =>
+      _.pick(
+        { date: product.createdAt, price: product.price, stock: product.stock },
+        ["date", "price", "stock"]
+      )
+  );
+
   return (
     <Card>
       <CardHeader>
@@ -50,40 +56,26 @@ export function ChartArea() {
       <CardContent>
         <ChartContainer config={chartConfig}>
           <AreaChart
-            accessibilityLayer
+            width={600}
+            height={300}
             data={chartData}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
+            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
           >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="dot" />}
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="date" tickFormatter={(value) => value.slice(6)} />
+            <YAxis />
+            <Tooltip content={<ChartTooltipContent />} />
+            <Area
+              type="monotone"
+              dataKey="price"
+              stroke="#8884d8"
+              fill="#8884d8"
             />
             <Area
-              dataKey="mobile"
-              type="natural"
-              fill="var(--color-mobile)"
-              fillOpacity={0.4}
-              stroke="var(--color-mobile)"
-              stackId="a"
-            />
-            <Area
-              dataKey="desktop"
-              type="natural"
-              fill="var(--color-desktop)"
-              fillOpacity={0.4}
-              stroke="var(--color-desktop)"
-              stackId="a"
+              type="monotone"
+              dataKey="stock"
+              stroke="#82ca9d"
+              fill="#82ca9d"
             />
           </AreaChart>
         </ChartContainer>
