@@ -7,7 +7,7 @@ import Footer from "@/app/components/Footer";
 import { ThemeProvider } from "@/app/components/theme-provider";
 
 import { cookies } from "next/headers";
-import { AuthProvider } from "@/app/AppProvider";
+import { AuthProvider } from "@/app/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {

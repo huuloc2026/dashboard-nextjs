@@ -47,7 +47,6 @@ export default function ContactFormPreview() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      console.log(values);
       toast.success("Your message has been sent successfully!");
     } catch (error) {
       console.error("Error submitting contact form", error);

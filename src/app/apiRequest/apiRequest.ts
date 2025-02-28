@@ -49,6 +49,36 @@ export class ApiRequest {
     return data;
   }
 
+  /**
+   * Fetches the current user's information from the server NextJS.
+   *
+   * This method sends a GET request to the '/api/auth/me' endpoint to retrieve
+   * the authenticated user's data. If successful, it updates the instance's token
+   * with the one received in the response.
+   *
+   * @throws {Error} Throws an error if the server response is not OK.
+   * @returns {Promise<any>} A promise that resolves to the user data returned by the server.
+   */
+  async me() {
+    const response = await fetch("/api/auth/me", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    if (!response.ok) {
+      throw new Error("Failed to set token in cookie.");
+    }
+
+    const data = await response.json();
+    this.setToken(data.token); // Lưu vào instance
+    return data;
+  }
+
+  async profile(token: string) {
+    return await httpClient(`${this.baseUrl}/auth/me`, "GET", null, {
+      token,
+    });
+  }
+
   async register(email: string, password: string, name: string) {
     return httpClient(`${this.baseUrl}/auth/register`, "POST", {
       email,

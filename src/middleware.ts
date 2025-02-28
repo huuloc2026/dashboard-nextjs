@@ -6,7 +6,6 @@ const privatePaths = ["/dashboard", "/profile", "/settings", "/me"];
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  console.log(pathname);
   const token = request.cookies.get("accessToken")?.value;
 
   if (privatePaths.some((path) => pathname.startsWith(path)) && !token) {

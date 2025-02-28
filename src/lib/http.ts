@@ -15,6 +15,32 @@ export class HttpError extends Error {
   }
 }
 
+/**
+ * Makes an HTTP request using the Fetch API with the provided parameters.
+ *
+ * @template T - The expected response type.
+ * @param {string} url - The URL to which the request is sent.
+ * @param {"GET" | "POST" | "PUT" | "PATCH" | "DELETE"} [method="GET"] - The HTTP method to use for the request.
+ * @param {any} [body] - The body of the request, if applicable.
+ * @param {FetchOptions} [options={}] - Additional fetch options including headers, token, and timeout.
+ * @returns {Promise<T>} - A promise that resolves to the response data of type T.
+ * @throws {HttpError} - Throws an error if the response is not ok.
+ * @throws {Error} - Throws an error if the request times out or another error occurs.
+ *
+ * @example
+ * ```typescript
+ * interface User {
+ *   id: number;
+ *   name: string;
+ * }
+ *
+ * const user: User = await httpClient<User>('/api/user', 'GET', null, {
+ *   token: 'your-token-here',
+ *   timeout: 5000,
+ * });
+ * console.log(user);
+ * ```
+ */
 export async function httpClient<T = any>(
   url: string,
   method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" = "GET",

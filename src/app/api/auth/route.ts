@@ -8,6 +8,7 @@ export async function POST(request: Request) {
       status: 400,
     });
   }
+
   return Response.json(
     { token },
     {
@@ -16,10 +17,10 @@ export async function POST(request: Request) {
     }
   );
 }
-// ✅ API để logout và xóa cookie
-export async function DELETE() {
-  return new Response(null, {
-    status: 200,
-    headers: { "Set-Cookie": "accessToken=; Path=/; HttpOnly; Max-Age=0" },
-  });
-}
+// // ✅ API để logout và xóa cookie
+// export async function DELETE() {
+//   return new Response(null, {
+//     status: 200,
+//     headers: { "Set-Cookie": "accessToken=; Path=/; HttpOnly; Max-Age=0" },
+//   });
+// }
