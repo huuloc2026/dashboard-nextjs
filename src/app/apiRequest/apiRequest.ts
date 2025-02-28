@@ -21,6 +21,10 @@ export class ApiRequest {
     this.token = token;
   }
 
+  getToken() {
+    return this.token;
+  }
+
   clearToken() {
     this.token = null;
   }
@@ -63,13 +67,16 @@ export class ApiRequest {
     const response = await fetch("/api/auth/me", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
     });
+  
+
     if (!response.ok) {
-      throw new Error("Failed to set token in cookie.");
+      throw new Error("Failed to fetch user data.");
     }
 
     const data = await response.json();
-    this.setToken(data.token); // Lưu vào instance
+    this.setToken(data.token);
     return data;
   }
 
