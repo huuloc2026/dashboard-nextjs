@@ -1,19 +1,25 @@
 "use client";
-import { useAppContext } from "@/app/AppProvider";
-import React from "react";
 
-const Profile = () => {
-  const { accessToken } = useAppContext();
+import { useEffect, useState } from "react";
 
-  return (
-    <div className="text-white ">
-      Your token is:
-      <br />
-      <div className="text-red-500 ">
-        {accessToken ? ` ${accessToken}` : "No token found"}
-      </div>
-    </div>
-  );
-};
+export default function UserInfo() {
+  const [token, setToken] = useState<string | null>(null);
 
-export default Profile;
+  useEffect(() => {
+    async function fetchToken() {
+      try {
+        const response = await fetch("/api/auth/me");
+        if (!response.ok) throw new Error("Unauthorized");
+
+        const data = await response.json();
+        setToken(data.token);
+      } catch (error) {
+        console.error("Error fetching token:", error);
+      }
+    }
+
+    fetchToken();
+  }, []);
+
+  return <div>Access Token: {token ? token : "Not logged in"}</div>;
+}

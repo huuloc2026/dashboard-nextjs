@@ -1,31 +1,33 @@
 "use client";
-import React from "react";
 
-const AppContext = React.createContext({
-  accessToken: "",
-  setAccessToken: (token: string) => {},
-});
+import { createContext, useContext, useEffect, useState } from "react";
 
-export const useAppContext = () => {
-  const context = React.useContext(AppContext);
+interface AuthContextType {
+  token: string | null;
+  setToken: (token: string | null) => void;
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("accessToken");
+    if (storedToken) setToken(storedToken);
+  }, []);
+
+  return (
+    <AuthContext.Provider value={{ token, setToken }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+export function useAuth() {
+  const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useAppContext must be used within an AppProvider");
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
-};
-
-export default function AppProvider({
-  children,
-  initialAccessToken = "",
-}: {
-  children: React.ReactNode;
-  initialAccessToken?: string;
-}) {
-  const [accessToken, setAccessToken] = React.useState(initialAccessToken);
-  //   const value = React.useMemo(() => ({ accessToken }), [accessToken]);
-  return (
-    <AppContext.Provider value={{ accessToken, setAccessToken }}>
-      {children}
-    </AppContext.Provider>
-  );
 }

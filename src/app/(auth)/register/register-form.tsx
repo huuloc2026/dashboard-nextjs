@@ -26,6 +26,8 @@ import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import envConfig from "@/app/config/config";
 import { apiRequest } from "@/utils/apiRequest";
+import { ApiRequest } from "@/app/apiRequest/apiRequest";
+import { useRouter } from "next/navigation";
 
 // Define validation schema using Zod
 const formSchema = z.object({
@@ -41,6 +43,7 @@ const formSchema = z.object({
 });
 
 export default function RegisterForm() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,9 +55,15 @@ export default function RegisterForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const result = await apiRequest("/auth/register", "POST", values);
-      toast.success("Registration successful!");
-      console.log("Success:", result);
+      const api = ApiRequest.getInstance();
+      await api.register(values.email, values.password, values.name);
+
+      toast.success("register successful!");
+
+      router.push("/dashboard");
+      // const result = await apiRequest("/auth/register", "POST", values);
+      // toast.success("Registration successful!");
+      // console.log("Success:", result);
     } catch (error: any) {
       toast.error(error.message || "Failed to submit the form.");
     }

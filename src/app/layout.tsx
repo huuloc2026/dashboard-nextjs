@@ -5,8 +5,9 @@ import "./globals.css";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { ThemeProvider } from "@/app/components/theme-provider";
-import AppProvider from "@/app/AppProvider";
+
 import { cookies } from "next/headers";
+import { AuthProvider } from "@/app/AppProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
@@ -28,12 +29,12 @@ export default async function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div className="flex flex-col min-h-screen">
             <Header />
-            <AppProvider initialAccessToken={accessToken?.value}>
+            <AuthProvider>
               <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-6">
                 {children}
               </main>
               <Footer />
-            </AppProvider>
+            </AuthProvider>
           </div>
         </ThemeProvider>
         <Toaster />
