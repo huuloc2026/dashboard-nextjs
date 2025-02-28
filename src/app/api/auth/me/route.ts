@@ -11,7 +11,6 @@ export async function GET() {
         headers: { "Content-Type": "application/json" },
       });
     }
-    console.log("Access Token:", accessToken.value);
 
     return new Response(JSON.stringify({ token: accessToken.value }), {
       status: 200,

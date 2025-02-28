@@ -1,58 +1,54 @@
 "use client";
-import { Home, User, PackageSearch, Wallet, Settings } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import avatar from "/public/Fedora.png"; // Thay bằng đường dẫn ảnh thực tế
+import {
+  Home,
+  User,
+  PackageSearch,
+  Wallet,
+  Settings,
+  LogOutIcon,
+} from "lucide-react";
+
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
+import { useAuth } from "@/app/AuthProvider";
+import HelloUser from "@/app/components/HelloUser";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const Sidebar = () => {
+  const router = useRouter();
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+      toast.success("Logged out successfully!");
+      router.push("/login");
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
+  };
   return (
     <aside className="w-64 bg-card h-screen p-4 hidden lg:flex flex-col border-r border-border">
       {/* Logo */}
       <h2 className="text-2xl font-bold mb-6 text-primary">Admin Dashboard</h2>
-
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-          {/* Avatar + User */}
-          <div className="flex items-center  p-3 rounded-2xl mb-4 bg-white dark:bg-zinc-900/70  ">
-            <div className="w-10 h-10 rounded-full overflow-hidden border border-border">
-              <Avatar>
-                <AvatarImage
-                  src="https://img.freepik.com/free-psd/contact-icon-illustration-isolated_23-2151903337.jpg"
-                  alt="User Avatar"
-                />
-                <AvatarFallback>BT</AvatarFallback>
-              </Avatar>
-            </div>
-            <h3 className="ml-3 text-lg font-semibold ">Hello, user!</h3>
-          </div>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <Link href="/">
-            {" "}
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-          </Link>
-          <Link href="/">
-            {" "}
-            <DropdownMenuItem>Billing</DropdownMenuItem>
-          </Link>
-          <Link href="/login">
-            {" "}
-            <DropdownMenuItem>Log Out</DropdownMenuItem>
-          </Link>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      {/* Avatar + User */}
+      <div className="flex items-center  p-3 rounded-2xl mb-4 bg-white dark:bg-zinc-900/70  ">
+        <div className="w-10 h-10 rounded-full  border border-border">
+          <Avatar>
+            <AvatarImage
+              src="https://img.freepik.com/free-psd/contact-icon-illustration-isolated_23-2151903337.jpg"
+              alt="User Avatar"
+            />
+            <AvatarFallback>BT</AvatarFallback>
+          </Avatar>
+        </div>
+        <h3 className="ml-3 text-lg font-semibold ">
+          <HelloUser />
+        </h3>
+      </div>
 
       {/* Navigation */}
       <nav className="flex-1">
@@ -101,6 +97,16 @@ const Sidebar = () => {
               <Settings className="mr-2 h-4 w-4" />
               Setting
             </Link>
+          </li>
+          {/* Nút Log Out */}
+          <li>
+            <button
+              onClick={handleLogout}
+              className="flex items-center w-full p-2 rounded-lg hover:bg-muted"
+            >
+              <LogOutIcon className="mr-2 h-4 w-4" />
+              Log out
+            </button>
           </li>
         </ul>
       </nav>

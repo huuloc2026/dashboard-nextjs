@@ -24,9 +24,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
-import envConfig from "@/app/config/config";
 
-import { redirect } from "next/navigation";
 import { ApiRequest } from "@/app/apiRequest/apiRequest";
 
 // Improved schema with additional validation rules

@@ -48,6 +48,7 @@ export class ApiRequest {
     }
 
     const data = await response.json();
+
     this.setToken(data.token); // Lưu vào instance
 
     return data;
@@ -69,7 +70,6 @@ export class ApiRequest {
       headers: { "Content-Type": "application/json" },
       credentials: "include",
     });
-  
 
     if (!response.ok) {
       throw new Error("Failed to fetch user data.");
