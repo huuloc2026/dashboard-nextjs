@@ -1,6 +1,7 @@
 import { ChartArea } from "@/app/components/chart-area";
 import { ChartBar } from "@/app/components/chart-bar";
-import List01 from "@/app/components/list-01";
+import ListProduct from "@/app/components/list-01";
+
 import UserList from "@/app/components/list-user";
 import { Calendar } from "lucide-react";
 
@@ -9,7 +10,7 @@ const DashBoardPage = () => {
     <div className="grid grid-cols-8 grid-rows-6 gap-4 ">
       {/* Left Panel - List */}
       <div className="col-span-2 row-span-2 col-start-1 col-end-5  rounded-lg shadow-sm ">
-        <List01 />
+        <ListProduct />
       </div>
 
       {/* User List */}
@@ -24,7 +25,7 @@ const DashBoardPage = () => {
 
       {/* Upcoming Events */}
       <div className="col-span-3 row-span-3 col-start-6 row-start-3">
-        <List01 />
+        <ListProduct />
       </div>
     </div>
   );

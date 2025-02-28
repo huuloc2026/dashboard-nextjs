@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import {
   UserRound,
@@ -11,6 +11,8 @@ import {
   Edit,
   Trash2,
 } from "lucide-react";
+import { ApiRequest } from "@/app/apiRequest/apiRequest";
+import { useAuth } from "@/app/AuthProvider";
 
 interface User {
   id: string;
@@ -99,6 +101,18 @@ export default function UserList({
       setUsers(users.filter((u) => u.id !== id));
     }
   };
+  const { token } = useAuth();
+  useEffect(() => {
+    const fetchProducts = async () => {
+      if (!token) return;
+      const data = await ApiRequest.getInstance().getUser(token);
+      // fetch 5 user
+      const fiveUser = data.data;
+      const datane = fiveUser.slice(0, 5);
+      setUsers(datane);
+    };
+    fetchProducts();
+  }, [token]);
 
   return (
     <div
@@ -136,15 +150,12 @@ export default function UserList({
                 className="flex items-center gap-3 cursor-pointer"
                 onClick={() => editUser(user.id)}
               >
-                {user.avatar ? (
-                  <img
-                    src={user.avatar}
-                    alt={user.name}
-                    className="w-8 h-8 rounded-full"
-                  />
-                ) : (
-                  <UserRound className="w-8 h-8 text-zinc-600 dark:text-zinc-400" />
-                )}
+                <img
+                  src="/user.svg"
+                  alt={user.name}
+                  className="w-8 h-8 rounded-full"
+                />
+
                 <div>
                   <h3 className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
                     {user.name}

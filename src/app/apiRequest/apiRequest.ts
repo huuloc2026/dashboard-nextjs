@@ -101,11 +101,16 @@ export class ApiRequest {
   }
 
   // 👤 USER API
-  //   async getUser() {
-  //     return httpClient(`${this.baseUrl}/user`, "GET", null, {
-  //       token: this.token!,
-  //     });
-  //   }
+  async getUser(token: any) {
+    return httpClient(
+      `${this.baseUrl}/users?page=1&limit=5`,
+      "GET",
+      undefined,
+      {
+        token,
+      }
+    );
+  }
 
   //   async updateUser(
   //     userId: string,
@@ -129,11 +134,16 @@ export class ApiRequest {
   //     });
   //   }
 
-  //   async getProducts() {
-  //     return httpClient(`${this.baseUrl}/products`, "GET", null, {
-  //       token: this.token!,
-  //     });
-  //   }
+  async getProducts(token: any) {
+    return httpClient(
+      `${this.baseUrl}/product?page=1&limit=5`,
+      "GET",
+      undefined,
+      {
+        token,
+      }
+    );
+  }
 
   //   async updateProduct(
   //     productId: string,
