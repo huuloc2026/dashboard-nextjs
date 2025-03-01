@@ -19,7 +19,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarFooter,
 } from "@/components/ui/sidebar";
 import {
   DropdownMenu,
@@ -29,6 +28,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import SidebarFooterAvatar from "@/app/components/sidebar-avatar";
+import { useAuth } from "@/app/AuthProvider";
 
 // Menu items.
 const items = [

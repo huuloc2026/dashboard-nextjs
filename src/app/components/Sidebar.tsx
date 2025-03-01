@@ -23,6 +23,7 @@ type User = {
 
 const Sidebar = () => {
   const token = useAuth();
+  const router = useRouter();
 
   if (!token) return;
   const [user, setUser] = useState(token?.user?.name);
@@ -31,7 +32,6 @@ const Sidebar = () => {
       setUser(token?.user?.name);
     }
   }, [token, token?.user?.name]);
-  const router = useRouter();
   const handleLogout = async () => {
     try {
       await fetch("/api/auth/logout", {

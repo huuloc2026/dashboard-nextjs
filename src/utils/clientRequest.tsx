@@ -2,7 +2,7 @@ const BASE_URL = "http://localhost:8386/v1/api";
 
 const request = async (
   endpoint: string,
-  method: "PUT" | "DELETE",
+  method: "GET" | "POST" | "PUT" | "DELETE",
   token: string,
   data?: any
 ) => {
@@ -45,4 +45,12 @@ export const UpdateProductApi = (
 
 export const DeleteProductApi = (productId: string, token: string) => {
   return request(`/product/${productId}`, "DELETE", token);
+};
+
+export const MeProfileApi = (token: string) => {
+  return request("/auth/me", "GET", token);
+};
+
+export const LogOutApi = (token: string) => {
+  return request("/auth/logout", "POST", token);
 };
