@@ -1,7 +1,8 @@
 import { ChartArea } from "@/app/components/chart-area";
-import { fetchToken } from "@/app/noooo/product/fetchProduct";
+
 import ProductCRUD from "@/app/noooo/product/ProductForm";
 import ProductListPagination from "@/app/dashboard/product/ProductList";
+import { fetchToken } from "@/utils/FetchToken";
 
 export const ProductPage = async () => {
   const token = await fetchToken();

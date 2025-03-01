@@ -20,39 +20,46 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { ApiRequest } from "@/app/apiRequest/apiRequest";
+import { useAuth } from "@/app/AuthProvider";
+import { useRouter } from "next/navigation";
 
 export function DiaLogUser({ user }: any) {
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
   const [status, setStatus] = useState(user.status);
-  const [role, setRole] = useState(user.role); // Giả sử role mặc định là "User"
+  const [role, setRole] = useState(user.role);
 
-  const isAdmin = role === "Admin"; // Kiểm tra xem có phải admin không
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault(); // Ngăn chặn reload trang
+  const isAdmin = role === "Admin";
+  const { token } = useAuth();
+  const router = useRouter();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-    // Kiểm tra dữ liệu hợp lệ (nếu cần)
     if (!email || !name || !role || !status) {
       toast("Please fill in all fields.");
       return;
     }
 
-    // Tạo object chứa thông tin profile
     const updatedProfile = {
       email,
       name,
       role,
       status,
     };
-
-    try {
-      // Gửi dữ liệu lên server (giả sử có API update profile)
-      console.log("Submitting data:", updatedProfile);
-      toast("Profile updated successfully!");
-    } catch (error) {
-      console.error("Update failed:", error);
-      toast("Failed to update profile.");
-    }
+    const updateUser = await fetch(
+      `http://localhost:8386/v1/api/users/${user.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedProfile),
+      }
+    );
+    toast("Profile updated successfully!");
+    router.refresh();
   };
 
   return (

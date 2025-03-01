@@ -1,11 +1,12 @@
 import { ChartArea } from "@/app/components/chart-area";
-import { fetchToken } from "@/app/noooo/product/fetchProduct";
+
 import ProductCRUD from "@/app/noooo/product/ProductForm";
 import ProductListPagination from "@/app/dashboard/product/ProductList";
+import { fetchToken } from "@/utils/FetchToken";
 
 export const ProductPage = async () => {
   const token = await fetchToken();
-  const response = await fetch("http://localhost:8386/v1/api/product", {
+  const response = await fetch("http://localhost:8386/v1/api/users", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -15,9 +16,9 @@ export const ProductPage = async () => {
   if (!response.ok) {
     throw new Error("Failed to fetch data");
   }
-  const productsFromFetch = await response.json();
+  const userFromFetch = await response.json();
 
-  const arrayList = productsFromFetch.data;
+  const arrayList = userFromFetch.data;
 
   return (
     <>

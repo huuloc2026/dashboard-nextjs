@@ -20,15 +20,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { useAuth } from "@/app/AuthProvider";
+import { useRouter } from "next/navigation";
 
 export function DialogDeleteUser({ user }: any) {
+  const { token } = useAuth();
+  const router = useRouter();
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
   const [status, setStatus] = useState(user.status);
   const [role, setRole] = useState(user.role); // Giả sử role mặc định là "User"
 
   const isAdmin = role === "Admin"; // Kiểm tra xem có phải admin không
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // Ngăn chặn reload trang
 
     // Kiểm tra dữ liệu hợp lệ (nếu cần)
@@ -45,14 +49,18 @@ export function DialogDeleteUser({ user }: any) {
       status,
     };
 
-    try {
-      // Gửi dữ liệu lên server (giả sử có API update profile)
-      console.log("Submitting data:", updatedProfile);
-      toast("Delete user successfully!");
-    } catch (error) {
-      console.error("Update failed:", error);
-      toast("Failed to update profile.");
-    }
+    const updateUser = await fetch(
+      `http://localhost:8386/v1/api/users/${user.id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    router.refresh();
+    toast("Delete user successfully!");
   };
 
   return (

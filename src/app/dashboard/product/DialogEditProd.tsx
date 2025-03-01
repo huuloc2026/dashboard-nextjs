@@ -30,11 +30,6 @@ export function DialogEditProd({ product }: any) {
   const [createdAt, setCreatedAt] = useState(product.createdAt);
   const [updatedAt, setUpdatedAt] = useState(product.updatedAt);
 
-  //   const [name, setName] = useState(user.name);
-  //   const [email, setEmail] = useState(user.email);
-  //   const [status, setStatus] = useState(user.status);
-  //   const [role, setRole] = useState(user.role); // Giả sử role mặc định là "User"
-
   //   const isAdmin = role === "Admin"; // Kiểm tra xem có phải admin không
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault(); // Ngăn chặn reload trang

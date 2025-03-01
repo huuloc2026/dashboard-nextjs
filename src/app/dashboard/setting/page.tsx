@@ -6,7 +6,7 @@ import { DeleteAccount } from "./DeleteAccount";
 export default function AccountSettings() {
   return (
     <div className="min-h-screen items-center justify-center space-y-4">
-      <PersonalInfo />
+      {/* <PersonalInfo /> */}
       <ChangePassword />
       <PrivacySettings />
       <DeleteAccount />

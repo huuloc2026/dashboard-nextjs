@@ -122,11 +122,9 @@ const mockUsers = [
     updateAt: "2024-06-20",
   },
 ];
-const dataUsers = mockUsers;
-export default function UserListPagination() {
-  const handleExtractId = (userId: number) => {
-    console.log("User ID:", userId);
-  };
+export default function UserListPagination({ arrayList }: any) {
+  const dataUsers = arrayList;
+
   return (
     <main className="container mx-auto px-4 md:px-6 py-8">
       <div className="flex items-center justify-between mb-6">
@@ -166,17 +164,21 @@ export default function UserListPagination() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {dataUsers.map((user) => (
+            {dataUsers.map((user: any) => (
               <TableRow key={user.id}>
                 <TableCell>{user.name}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.role}</TableCell>
                 <TableCell>{user.status}</TableCell>
-                <TableCell>{user.createdAt}</TableCell>
-                <TableCell>{user.updateAt}</TableCell>
-                <TableCell className="text-right">
-                  <DiaLogUser user={user} />
+                <TableCell className="text-sm text-wrap">
+                  {new Date(user.createdAt).toLocaleString()}
+                </TableCell>
+                <TableCell className="text-sm text-wrap">
+                  {new Date(user.updatedAt).toLocaleString()}
+                </TableCell>
 
+                <TableCell className="text-right flex">
+                  <DiaLogUser user={user} />
                   <DialogDeleteUser user={user} />
                 </TableCell>
               </TableRow>
@@ -211,26 +213,5 @@ export default function UserListPagination() {
         </div>
       </div>
     </main>
-  );
-}
-
-function TrashIcon(props: any) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M3 6h18" />
-      <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-      <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-    </svg>
   );
 }
