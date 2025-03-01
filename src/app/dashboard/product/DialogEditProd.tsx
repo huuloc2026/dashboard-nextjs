@@ -24,9 +24,6 @@ import { useAuth } from "@/app/AuthProvider";
 import { useRouter } from "next/navigation";
 import { UpdateProductApi } from "@/utils/clientRequest";
 export function DialogEditProd({ product }: any) {
-  const router = useRouter();
-  const { token } = useAuth();
-  if (!token) return null;
   const [name, setName] = useState(product.name);
   const [description, setDescription] = useState(product.description);
   const [price, setPrice] = useState(product.price);
@@ -34,6 +31,9 @@ export function DialogEditProd({ product }: any) {
   const [status, setStatus] = useState(product.status);
   const [createdAt, setCreatedAt] = useState(product.createdAt);
   const [updatedAt, setUpdatedAt] = useState(product.updatedAt);
+  const router = useRouter();
+  const { token } = useAuth();
+  if (!token) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

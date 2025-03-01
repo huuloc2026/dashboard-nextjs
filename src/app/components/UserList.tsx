@@ -131,26 +131,7 @@ export default function UserListPagination({ arrayList }: any) {
         <h1 className="text-2xl font-bold">Users</h1>
       </div>
       <div className="rounded-lg shadow-sm overflow-hidden">
-        <div className="px-6 py-4 border-b flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <Input
-              type="text"
-              placeholder="Search users..."
-              className="max-w-xs"
-            />
-            <Select>
-              <SelectTrigger className="w-48">
-                <SelectValue placeholder="Filter by role" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="admin">Admin</SelectItem>
-                <SelectItem value="seller">Seller</SelectItem>
-                <SelectItem value="client">Client</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="text-sm ">Showing 1-10 of 100 results</div>
-        </div>
+        <div className="px-6 py-4 border-b flex items-center justify-between"></div>
         <Table>
           <TableHeader>
             <TableRow>

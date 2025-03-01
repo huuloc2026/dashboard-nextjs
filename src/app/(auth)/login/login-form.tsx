@@ -46,15 +46,11 @@ export default function LoginForm() {
       password: "password123",
     },
   });
-
   const { login } = useAuth();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       await login(values.email, values.password); // Gọi login từ context
-
-      // const api = ApiRequest.getInstance();
-      // await api.login(values.email, values.password);
 
       toast.success("Login successful!");
 

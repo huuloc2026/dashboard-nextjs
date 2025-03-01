@@ -169,15 +169,7 @@ export default function ProductList({ dataFromFetch }: any) {
       <div className="rounded-lg shadow-sm overflow-hidden">
         <div className="px-6 py-4 border-b flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <Input
-              type="text"
-              placeholder="Search users..."
-              className="max-w-xs"
-            />
             <Select>
-              <SelectTrigger className="w-48">
-                <SelectValue placeholder="Filter by role" />
-              </SelectTrigger>
               <SelectContent>
                 <SelectItem value="admin">Admin</SelectItem>
                 <SelectItem value="seller">Seller</SelectItem>
@@ -185,7 +177,6 @@ export default function ProductList({ dataFromFetch }: any) {
               </SelectContent>
             </Select>
           </div>
-          <div className="text-sm ">Showing 1-10 of 100 results</div>
         </div>
         <Table>
           <TableHeader>

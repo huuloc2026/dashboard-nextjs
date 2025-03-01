@@ -25,9 +25,6 @@ import { useRouter } from "next/navigation";
 import { DeleteProductApi } from "@/utils/clientRequest";
 
 export function DialogDeleteProduct({ product }: any) {
-  const { token } = useAuth();
-  if (!token) return null;
-  const router = useRouter();
   const [name, setName] = useState(product.name);
   const [description, setDescription] = useState(product.description);
   const [price, setPrice] = useState(product.price);
@@ -35,6 +32,9 @@ export function DialogDeleteProduct({ product }: any) {
   const [status, setStatus] = useState(product.status);
   const [createdAt, setCreatedAt] = useState(product.createdAt);
   const [updatedAt, setUpdatedAt] = useState(product.updatedAt);
+  const router = useRouter();
+  const { token } = useAuth();
+  if (!token) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

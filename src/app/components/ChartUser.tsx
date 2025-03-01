@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { TrendingUp } from "lucide-react";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 
@@ -18,37 +19,50 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-const chartDataUser = [
-  { month: "January", seller: 1860, client: 800 },
-  { month: "February", seller: 2100, client: 950 },
-  { month: "March", seller: 1950, client: 1100 },
-  { month: "April", seller: 2300, client: 1250 },
-  { month: "May", seller: 2000, client: 1000 },
-  { month: "June", seller: 2200, client: 1150 },
-  { month: "July", seller: 1700, client: 900 },
-  { month: "August", seller: 2400, client: 1300 },
-  { month: "September", seller: 2150, client: 1050 },
-  { month: "October", seller: 2250, client: 1200 },
-  { month: "November", seller: 1900, client: 950 },
-  { month: "December", seller: 2500, client: 1350 },
-];
 const chartConfig = {
-  seller: {
-    label: "seller",
+  admin: {
+    label: "Admin",
     color: "hsl(var(--chart-1))",
   },
-  client: {
-    label: "client",
+  seller: {
+    label: "Seller",
     color: "hsl(var(--chart-2))",
+  },
+  client: {
+    label: "Client",
+    color: "hsl(var(--chart-3))",
   },
 } satisfies ChartConfig;
 
-export function ChartUser() {
+export function ChartUser({
+  roleCounts,
+}: {
+  roleCounts: Record<string, number>;
+}) {
+  const [chartDataUser, setChartDataUser] = useState([
+    { month: "January", admin: 2, seller: 5, client: 10 },
+    { month: "February", admin: 3, seller: 10, client: 10 },
+    { month: "March", admin: 4, seller: 40, client: 10 },
+  ]);
+
+  useEffect(() => {
+    if (roleCounts) {
+      setChartDataUser((prevData) =>
+        prevData.map((data, index) => ({
+          ...data,
+          admin: roleCounts.ADMIN || 0,
+          seller: roleCounts.SELLER || 0,
+          client: roleCounts.CLIENT || 0,
+        }))
+      );
+    }
+  }, [roleCounts]);
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Line Chart - Multiple</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>Line Chart</CardTitle>
+        <CardDescription>Mar 2024 - Mar 2025</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
@@ -80,6 +94,13 @@ export function ChartUser() {
               dataKey="client"
               type="monotone"
               stroke="var(--color-client)"
+              strokeWidth={2}
+              dot={false}
+            />
+            <Line
+              dataKey="admin"
+              type="monotone"
+              stroke="var(--color-admin)"
               strokeWidth={2}
               dot={false}
             />
