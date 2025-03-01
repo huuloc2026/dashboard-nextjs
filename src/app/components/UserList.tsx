@@ -29,6 +29,7 @@ import { DiaLogUser } from "@/app/dashboard/user/DialogEditUser";
 import { toast } from "sonner";
 import { useState } from "react";
 import { DialogDeleteUser } from "@/app/dashboard/user/DiaLogDelete";
+import { FetchUserPagination } from "@/utils/httpRequest";
 
 const mockUsers = [
   {
@@ -124,7 +125,6 @@ const mockUsers = [
 ];
 export default function UserListPagination({ arrayList }: any) {
   const dataUsers = arrayList;
-
   return (
     <main className="container mx-auto px-4 md:px-6 py-8">
       <div className="flex items-center justify-between mb-6">
