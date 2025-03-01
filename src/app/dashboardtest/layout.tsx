@@ -1,5 +1,5 @@
 import { ScrollToTop } from "@/app/components/ScollToTop";
-import { AppSidebar } from "@/app/dashboardtest/app-sidebar";
+import { AppSidebar } from "@/app/components/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { ArrowUpToLineIcon } from "lucide-react";
 
@@ -15,7 +15,7 @@ export default function DashBoardLayouTest({
         <SidebarTrigger variant={"secondary"} />
         {children}
       </main>
-      <ScrollToTop className=" text-white p-3 rounded-full fixed right-4 bottom-4 transition-opacity duration-300" />
+      <ScrollToTop className="bg-primary text-white dark:text-black p-3 rounded-full fixed right-4 bottom-4 transition-opacity duration-300" />
     </SidebarProvider>
   );
 }

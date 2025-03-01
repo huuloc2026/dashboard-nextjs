@@ -39,7 +39,7 @@ const items = [
   },
   {
     title: "Dashboard",
-    url: "/dashboard",
+    url: "/dashboardtest/home",
     icon: Inbox,
   },
   {
@@ -64,7 +64,7 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <div className="mt-[100px]">
+          <div className="mt-[100px] text-black dark:text-white">
             <SidebarGroupLabel>Application</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>

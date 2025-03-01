@@ -1,3 +1,4 @@
+"use client";
 import {
   Calendar,
   Home,
@@ -28,8 +29,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-// import  avatar  from "../../../public/5187865.png";
+import { useState } from "react";
+
 const SidebarFooterAvatar = () => {
+  const [name, setName] = useState("Jared Palmer");
+  const [avatarUrl, setAvatarUrl] = useState(
+    "https://cdn3d.iconscout.com/3d/premium/thumb/man-avatar-3d-icon-download-in-png-blend-fbx-gltf-file-formats--men-people-male-pack-avatars-icons-5187871.png?f=webp"
+  );
+  const [email, setEmail] = useState("jared@acme.inc");
   return (
     <>
       {" "}
@@ -37,16 +44,16 @@ const SidebarFooterAvatar = () => {
         <SidebarMenu className="py-2">
           <SidebarMenuItem>
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+              <DropdownMenuTrigger asChild className="focus:outline-none">
                 <SidebarMenuButton>
                   <div className="flex justify-between">
                     <Avatar className=" h-8 w-8 justify-center items-center">
-                      <AvatarImage src="https://cdn3d.iconscout.com/3d/premium/thumb/man-avatar-3d-icon-download-in-png-blend-fbx-gltf-file-formats--men-people-male-pack-avatars-icons-5187871.png?f=webp" />
+                      <AvatarImage src={avatarUrl} />
                       <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
                     <div className="ml-2">
-                      <p className="text-sm font-medium">Jared Palmer</p>
-                      <p className="text-sm ">jared@acme.inc</p>
+                      <p className="text-sm font-medium">{name}</p>
+                      <p className="text-sm ">{email}</p>
                     </div>
                     <ChevronUp className="h-5 w-5 ml-1 mt-2" />
                   </div>
@@ -58,9 +65,6 @@ const SidebarFooterAvatar = () => {
               >
                 <DropdownMenuItem>
                   <span>Account</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span>Billing</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <span>Sign out</span>
