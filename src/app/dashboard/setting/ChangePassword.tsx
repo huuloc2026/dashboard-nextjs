@@ -17,11 +17,11 @@ import { toast } from "sonner";
 import { PasswordInput } from "@/components/ui/password-input";
 
 export function ChangePassword() {
-  const token = useAuth();
-  if (!token) return;
-  const router = useRouter();
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const router = useRouter();
+  const token = useAuth();
+  if (!token) return;
   const handleLogout = async () => {
     try {
       await fetch("/api/auth/logout", {
@@ -75,7 +75,7 @@ export function ChangePassword() {
             <PasswordInput
               id="current-password"
               value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
+              onChange={(e:any) => setCurrentPassword(e.target.value)}
               placeholder="Enter current password"
             />
           </div>
@@ -84,7 +84,7 @@ export function ChangePassword() {
             <PasswordInput
               id="new-password"
               value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
+              onChange={(e:any) => setNewPassword(e.target.value)}
               placeholder="Enter new password"
             />
           </div>

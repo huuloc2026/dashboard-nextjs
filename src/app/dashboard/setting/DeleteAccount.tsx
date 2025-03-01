@@ -8,12 +8,32 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/AuthProvider";
+import { toast } from "sonner";
+import { DeleteAccountApi } from "@/utils/clientRequest";
 
 export function DeleteAccount() {
+  const router = useRouter();
+  const { token, user } = useAuth();
+  if (!token || !user) return;
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+      toast.success("Please login again!");
+      router.push("/login");
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
+  };
   const handleDeleteAccount = async () => {
     try {
-      await fetch("/api/user/delete", { method: "DELETE" });
-      alert("Account deleted successfully!");
+      await DeleteAccountApi(user?.id, token);
+      handleLogout();
+      toast("Account deleted successfully!");
     } catch (error) {
       console.error(error);
     }

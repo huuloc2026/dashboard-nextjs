@@ -54,3 +54,6 @@ export const MeProfileApi = (token: string) => {
 export const LogOutApi = (token: string) => {
   return request("/auth/logout", "POST", token);
 };
+export const DeleteAccountApi = (UserId: string, token: string) => {
+  return request(`/users/${UserId}`, "DELETE", token);
+};

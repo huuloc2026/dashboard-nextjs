@@ -42,7 +42,7 @@ export default function LoginForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "nguyenvanA@gmail.com",
+      email: "Ashly_Olson42@gmail.com",
       password: "password123",
     },
   });
@@ -54,7 +54,7 @@ export default function LoginForm() {
 
       toast.success("Login successful!");
 
-      router.push("/dashboard");
+      router.push("/dashboard/home");
 
       // setAccessToken(data);
       // console.log("Success:", result);

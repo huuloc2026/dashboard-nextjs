@@ -27,9 +27,9 @@ const HomeDashBoardPage = async () => {
       </div>
 
       {/* Large Chart */}
-      <div className="col-span-5 row-span-3 row-start-3">
+      {/* <div className="col-span-5 row-span-3 row-start-3">
         <ChartBar />
-      </div>
+      </div> */}
 
       {/* Upcoming Events */}
       {/* <div className="col-span-3 row-span-3 col-start-6 row-start-3">
