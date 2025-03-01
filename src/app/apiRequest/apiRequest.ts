@@ -112,6 +112,10 @@ export class ApiRequest {
     );
   }
 
+  async createUser(data: any, token: any) {
+    return httpClient(`${this.baseUrl}/auth/register`, "POST", data, { token });
+  }
+
   //   async updateUser(
   //     userId: string,
   //     data: Partial<{ name: string; email: string }>

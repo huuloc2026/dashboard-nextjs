@@ -1,12 +1,10 @@
 import { ChartUser } from "@/app/components/ChartUser";
 import UserListPagination from "@/app/components/UserList";
 
-import { ProductList } from "@/app/dashboard/product/ProductList";
 import UserForm from "@/app/dashboard/user/UserForm";
 import React from "react";
 
 export const UserPage = () => {
-  const arrayList: any[] = [];
   return (
     <>
       <div className="grid grid-cols-4 grid-rows-6 gap-4 ">

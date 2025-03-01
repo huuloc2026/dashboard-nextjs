@@ -44,9 +44,9 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/AuthProvider";
 
 enum UserRole {
-  Admin = "Admin",
-  Client = "Client",
-  Seller = "Seller",
+  ADMIN = "ADMIN",
+  CLIENT = "CLIENT",
+  SELLER = "SELLER",
 }
 
 const formSchema = z.object({
@@ -81,9 +81,9 @@ const initialValues = [
 ];
 
 const roleOptions = [
-  { id: 1, value: "Admin", label: "Admin" },
-  { id: 2, value: "Client", label: "Client" },
-  { id: 3, value: "Seller", label: "Seller" },
+  { id: 1, value: "ADMIN", label: "ADMIN" },
+  { id: 2, value: "CLIENT", label: "CLIENT" },
+  { id: 3, value: "SELLER", label: "SELLER" },
 ];
 
 const UserForm = () => {
@@ -91,10 +91,10 @@ const UserForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "John Doe",
-      email: "john.doe@example.com",
-      password: "securePassword",
-      role: "Admin" as UserRole,
+      name: "",
+      email: "",
+      password: "",
+      role: roleOptions[0].value as UserRole,
     },
   });
 
@@ -102,9 +102,8 @@ const UserForm = () => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      console.log(values);
-      // const api = ApiRequest.getInstance();
-      // await api.createProduct(values, token);
+      const api = ApiRequest.getInstance();
+      await api.createUser(values, token);
       toast.success("Created new user successful!");
       form.reset();
       router.refresh();

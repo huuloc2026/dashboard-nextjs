@@ -157,12 +157,6 @@ const ProductCRUD = () => {
       stock: 0,
       description: "",
       categoryId: "",
-      // id: "",
-      // imageUrl: null,
-      // categoryId: "",
-      // status: "ACTIVE",
-      // createdAt: new Date().toISOString(),
-      // updatedAt: new Date().toISOString(),
     },
   });
 
