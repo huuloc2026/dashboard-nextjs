@@ -22,9 +22,11 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { useAuth } from "@/app/AuthProvider";
 import { useRouter } from "next/navigation";
+import { UpdateProductApi } from "@/utils/clientRequest";
 export function DialogEditProd({ product }: any) {
-  const { token } = useAuth();
   const router = useRouter();
+  const { token } = useAuth();
+  if (!token) return null;
   const [name, setName] = useState(product.name);
   const [description, setDescription] = useState(product.description);
   const [price, setPrice] = useState(product.price);
@@ -46,21 +48,10 @@ export function DialogEditProd({ product }: any) {
         createdAt,
         updatedAt,
       };
-      const updateProduct = await fetch(
-        `http://localhost:8386/v1/api/product/${product.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(updateInforProduct),
-        }
-      );
-      if (!updateProduct) return;
-      router.refresh();
-      console.log("Submitting data:", updateInforProduct);
+      await UpdateProductApi(product.id, token, updateInforProduct);
+
       toast("Profile updated successfully!");
+      router.refresh();
     } catch (error) {
       console.error("Update failed:", error);
       toast("Failed to update profile.");

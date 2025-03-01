@@ -20,8 +20,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { useAuth } from "@/app/AuthProvider";
+import { useRouter } from "next/navigation";
+import { DeleteProductApi } from "@/utils/clientRequest";
 
 export function DialogDeleteProduct({ product }: any) {
+  const { token } = useAuth();
+  if (!token) return null;
+  const router = useRouter();
   const [name, setName] = useState(product.name);
   const [description, setDescription] = useState(product.description);
   const [price, setPrice] = useState(product.price);
@@ -30,24 +36,12 @@ export function DialogDeleteProduct({ product }: any) {
   const [createdAt, setCreatedAt] = useState(product.createdAt);
   const [updatedAt, setUpdatedAt] = useState(product.updatedAt);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault(); // Ngăn chặn reload trang
-
-    // Kiểm tra dữ liệu hợp lệ (nếu cần)
-
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     try {
-      // Gửi dữ liệu lên server (giả sử có API update profile)
-      const updateProduct = {
-        name,
-        description,
-        price,
-        stock,
-        status,
-        createdAt,
-        updatedAt,
-      };
-      console.log("Submitting data:", updateProduct);
-      toast("Profile updated successfully!");
+      await DeleteProductApi(product.id, token);
+      toast.success("Deleted Product successfully!");
+      router.refresh();
     } catch (error) {
       console.error("Update failed:", error);
       toast("Failed to update profile.");
