@@ -1,25 +1,29 @@
 import { ChartArea } from "@/app/components/chart-area";
 
 import ProductCRUD from "@/app/noooo/product/ProductForm";
-import ProductListPagination from "@/app/dashboard/product/ProductList";
+import ProductList from "@/app/dashboard/product/ProductList";
 import { fetchToken } from "@/utils/FetchToken";
-
-export const ProductPage = async () => {
+import { PaginationWithLinks } from "@/components/ui/pagination-with-links";
+import { FetchProductPagination } from "@/utils/httpRequest";
+export interface ProductPageProps {
+  data: any;
+  limit: number;
+  page: number;
+  total: number;
+}
+interface ParamsProps {
+  searchParams: {
+    [key: string]: string | undefined;
+  };
+}
+export const ProductPage = async ({ searchParams }: ParamsProps) => {
+  const Param = await searchParams;
   const token = await fetchToken();
-  const response = await fetch("http://localhost:8386/v1/api/product", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  if (!response.ok) {
-    throw new Error("Failed to fetch data");
-  }
-  const productsFromFetch = await response.json();
-
-  const arrayList = productsFromFetch.data;
-
+  if (!token) return;
+  const page = parseInt(searchParams?.page || "1", 10);
+  const limit = parseInt(searchParams?.limit || "10", 10);
+  const { data, total } = await FetchProductPagination(token, page, limit);
+  const arrayList = data || [];
   return (
     <>
       <div className="grid grid-cols-4 grid-rows-6 gap-4 ">
@@ -30,7 +34,12 @@ export const ProductPage = async () => {
           <ChartArea dataFromFetch={arrayList} />
         </div>
         <div className="col-span-4 row-span-4 row-start-3">
-          <ProductListPagination dataFromFetch={arrayList} />
+          <ProductList dataFromFetch={arrayList} />
+          <PaginationWithLinks
+            page={page}
+            pageSize={limit}
+            totalCount={total}
+          />
         </div>
       </div>
     </>

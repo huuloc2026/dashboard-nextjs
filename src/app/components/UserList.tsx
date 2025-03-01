@@ -185,32 +185,6 @@ export default function UserListPagination({ arrayList }: any) {
             ))}
           </TableBody>
         </Table>
-        <div className="px-6 py-4 border-t flex items-center justify-between">
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious href="#" />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#" isActive>
-                  1
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">2</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">3</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext href="#" />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-          <div className="text-sm text-gray-500 dark:text-gray-400">
-            Showing 1-10 of 100 results
-          </div>
-        </div>
       </div>
     </main>
   );

@@ -20,8 +20,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { useAuth } from "@/app/AuthProvider";
+import { useRouter } from "next/navigation";
 export function DialogEditProd({ product }: any) {
-  console.log(product);
+  const { token } = useAuth();
+  const router = useRouter();
   const [name, setName] = useState(product.name);
   const [description, setDescription] = useState(product.description);
   const [price, setPrice] = useState(product.price);
@@ -30,15 +33,11 @@ export function DialogEditProd({ product }: any) {
   const [createdAt, setCreatedAt] = useState(product.createdAt);
   const [updatedAt, setUpdatedAt] = useState(product.updatedAt);
 
-  //   const isAdmin = role === "Admin"; // Kiểm tra xem có phải admin không
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault(); // Ngăn chặn reload trang
-
-    // Kiểm tra dữ liệu hợp lệ (nếu cần)
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
     try {
-      // Gửi dữ liệu lên server (giả sử có API update profile)
-      const updateProduct = {
+      const updateInforProduct = {
         name,
         description,
         price,
@@ -47,7 +46,20 @@ export function DialogEditProd({ product }: any) {
         createdAt,
         updatedAt,
       };
-      console.log("Submitting data:", updateProduct);
+      const updateProduct = await fetch(
+        `http://localhost:8386/v1/api/product/${product.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(updateInforProduct),
+        }
+      );
+      if (!updateProduct) return;
+      router.refresh();
+      console.log("Submitting data:", updateInforProduct);
       toast("Profile updated successfully!");
     } catch (error) {
       console.error("Update failed:", error);
@@ -116,7 +128,7 @@ export function DialogEditProd({ product }: any) {
 
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="createAt" className="text-right">
-            Stock
+            createAt
           </Label>
           <Input
             disabled
@@ -128,7 +140,7 @@ export function DialogEditProd({ product }: any) {
         </div>
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="updatedAt" className="text-right">
-            Stock
+            updatedAt
           </Label>
           <Input
             disabled

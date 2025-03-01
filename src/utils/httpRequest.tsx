@@ -56,3 +56,30 @@ export const FetchUserPagination = async (
     total: user.total,
   };
 };
+
+export const FetchProductPagination = async (
+  token: string,
+  page: number,
+  limit: number
+): Promise<UserPageProps> => {
+  const response = await fetch(
+    `http://localhost:8386/v1/api/product?page=${page}&limit=${limit}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  if (!response.ok) {
+    throw new Error("Failed fetch data");
+  }
+  const user = await response.json();
+  return {
+    data: user.data,
+    page: user.page,
+    limit: user.limit,
+    total: user.total,
+  };
+};

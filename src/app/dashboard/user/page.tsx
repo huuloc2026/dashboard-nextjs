@@ -2,6 +2,7 @@ import { ChartUser } from "@/app/components/ChartUser";
 import UserListPagination from "@/app/components/UserList";
 
 import UserForm from "@/app/dashboard/user/UserForm";
+import { PaginationWithLinks } from "@/components/ui/pagination-with-links";
 import { fetchToken } from "@/utils/FetchToken";
 import { FetchUserPagination } from "@/utils/httpRequest";
 import React from "react";
@@ -24,7 +25,7 @@ const UserPage = async ({ searchParams }: ParamsProps) => {
   const limit = parseInt(searchParams?.limit || "10", 10);
 
   try {
-    const { data } = await FetchUserPagination(token, page, limit);
+    const { data, total } = await FetchUserPagination(token, page, limit);
     const arrayList = data || [];
 
     return (
@@ -37,6 +38,11 @@ const UserPage = async ({ searchParams }: ParamsProps) => {
         </div>
         <div className="col-span-4 row-span-4 row-start-3">
           <UserListPagination arrayList={arrayList} />
+          <PaginationWithLinks
+            page={page}
+            pageSize={limit}
+            totalCount={total}
+          />
         </div>
       </div>
     );
