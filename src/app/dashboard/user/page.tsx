@@ -1,8 +1,8 @@
 import { ChartUser } from "@/app/components/ChartUser";
 import UserListPagination from "@/app/components/UserList";
 
-import { ProductList } from "@/app/dashboardtest/product/ProductList";
-import UserForm from "@/app/dashboardtest/user/UserForm";
+import { ProductList } from "@/app/dashboard/product/ProductList";
+import UserForm from "@/app/dashboard/user/UserForm";
 import React from "react";
 
 export const UserPage = () => {

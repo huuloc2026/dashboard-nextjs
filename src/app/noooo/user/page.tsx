@@ -1,5 +1,5 @@
 import { ChartArea } from "@/app/components/chart-area";
-import ProductCRUD from "@/app/dashboard-archive/product/ProductForm";
+import ProductCRUD from "@/app/noooo/product/ProductForm";
 
 import React from "react";
 

@@ -140,6 +140,13 @@ const formSchema = z.object({
   // updatedAt: z.string().optional(),
 });
 
+export const categoryIDMap = [
+  { id: "d94f2730-e9cf-44e8-8e7a-f1fa129dc463", name: "Electronics" },
+  { id: "a83d9782-621f-4da3-8aca-05ad7d461213", name: "Clothing" },
+  { id: "eb17be2b-6809-4811-83a6-173ede6c46d0", name: "Books" },
+  { id: "ac85a058-48b1-44b4-8883-8c7e99e2d5a6", name: "Home Appliances" },
+];
+
 const ProductCRUD = () => {
   const { token } = useAuth();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -258,7 +265,7 @@ const ProductCRUD = () => {
                 name="categoryId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>Category</FormLabel>
                     <Select onValueChange={field.onChange}>
                       <FormControl>
                         <SelectTrigger>
@@ -266,18 +273,11 @@ const ProductCRUD = () => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="d94f2730-e9cf-44e8-8e7a-f1fa129dc463">
-                          Electronics
-                        </SelectItem>
-                        <SelectItem value="a83d9782-621f-4da3-8aca-05ad7d461213">
-                          Clothing
-                        </SelectItem>
-                        <SelectItem value="eb17be2b-6809-4811-83a6-173ede6c46d0">
-                          Books
-                        </SelectItem>
-                        <SelectItem value="ac85a058-48b1-44b4-8883-8c7e99e2d5a6">
-                          Home Appliances
-                        </SelectItem>
+                        {categoryIDMap.map((category) => (
+                          <SelectItem key={category.id} value={category.id}>
+                            {category.name}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                     <FormMessage />

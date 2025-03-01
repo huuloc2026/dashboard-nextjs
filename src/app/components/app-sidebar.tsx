@@ -39,22 +39,22 @@ const items = [
   },
   {
     title: "Dashboard",
-    url: "/dashboardtest/home",
+    url: "/dashboard/home",
     icon: Inbox,
   },
   {
     title: "User",
-    url: "/dashboardtest//user",
+    url: "/dashboard//user",
     icon: User,
   },
   {
     title: "Product",
-    url: "/dashboardtest/product",
+    url: "/dashboard/product",
     icon: PackageSearch,
   },
   {
     title: "Settings",
-    url: "/dashboardtest/setting",
+    url: "/dashboard/setting",
     icon: Settings,
   },
 ];

@@ -27,7 +27,7 @@ export function DialogEditProd({ product }: any) {
   const [price, setPrice] = useState(product.price);
   const [stock, setStock] = useState(product.stock);
   const [status, setStatus] = useState(product.status);
-  const [createAt, setCreateAt] = useState(product.createdAt);
+  const [createdAt, setCreatedAt] = useState(product.createdAt);
   const [updatedAt, setUpdatedAt] = useState(product.updatedAt);
 
   //   const [name, setName] = useState(user.name);
@@ -43,7 +43,16 @@ export function DialogEditProd({ product }: any) {
 
     try {
       // Gửi dữ liệu lên server (giả sử có API update profile)
-      console.log("Submitting data:");
+      const updateProduct = {
+        name,
+        description,
+        price,
+        stock,
+        status,
+        createdAt,
+        updatedAt,
+      };
+      console.log("Submitting data:", updateProduct);
       toast("Profile updated successfully!");
     } catch (error) {
       console.error("Update failed:", error);
@@ -55,14 +64,14 @@ export function DialogEditProd({ product }: any) {
     <Dialog>
       <DialogTrigger asChild className="focus:outline-none">
         <Button size="sm" variant="ghost">
-          Edit Profile
+          Edit Product
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
+          <DialogTitle>Edit Product</DialogTitle>
           <DialogDescription>
-            Update your personal information and settings.
+            Update your products information
           </DialogDescription>
         </DialogHeader>
         <div className="grid grid-cols-4 items-center gap-4">
@@ -117,8 +126,8 @@ export function DialogEditProd({ product }: any) {
           <Input
             disabled
             id="createAt"
-            value={createAt}
-            onChange={(e) => setCreateAt(e.target.value)}
+            value={createdAt}
+            onChange={(e) => setCreatedAt(e.target.value)}
             className="col-span-3"
           />
         </div>

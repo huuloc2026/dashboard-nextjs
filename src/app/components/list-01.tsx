@@ -1,18 +1,8 @@
 "use client";
 import React, { JSX, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import {
-  Laptop,
-  Smartphone,
-  Headphones,
-  Tv,
-  Plus,
-  ArrowRight,
-  ShoppingCart,
-  CreditCard,
-} from "lucide-react";
+import { Laptop, Smartphone, Headphones, Tv } from "lucide-react";
 import { useAuth } from "@/app/AuthProvider";
-import { ApiRequest } from "@/app/apiRequest/apiRequest";
 
 interface ProductItem {
   id: string;
@@ -43,56 +33,93 @@ const categoryIcons: Record<string, JSX.Element> = {
 };
 
 interface ListProductProps {
-  className?: string;
+  arrayProduct: ProductItem[];
 }
-
-export default function ListProduct({ className }: ListProductProps) {
-  const [products, setProducts] = useState<ProductItem[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const [totalBalance, setTotalBalance] = useState<number>(0);
-  const { token } = useAuth();
+const MockProducts = [
+  {
+    id: "4001e44e-a6a7-4fcd-94af-7f151f0148fe",
+    name: "Ali Estrada",
+    description: "Rerum commodi animi",
+    price: 782,
+    stock: 79,
+    imageUrl: null,
+    categoryId: "d94f2730-e9cf-44e8-8e7a-f1fa129dc463",
+    status: "ACTIVE",
+    createdAt: "2025-03-01T06:37:45.232Z",
+    updatedAt: "2025-03-01T06:37:45.232Z",
+  },
+  {
+    id: "89f55501-2f9c-4fd4-b757-98267bc05107",
+    name: "Caroline Davis",
+    description: "Quisquam labore qui",
+    price: 467,
+    stock: 48,
+    imageUrl: null,
+    categoryId: "79b1224f-6a3c-4069-a171-9b6b56730f31",
+    status: "INACTIVE",
+    createdAt: "2024-04-28T14:13:40.104Z",
+    updatedAt: "2024-04-28T14:13:40.104Z",
+  },
+  {
+    id: "172f7d4f-9652-4abe-a834-4d207270221e",
+    name: "Cameron Williamson",
+    description: "Est corporis et",
+    price: 285,
+    stock: 95,
+    imageUrl: null,
+    categoryId: "9d08796a-b13e-4165-a566-073be6089641",
+    status: "ACTIVE",
+    createdAt: "2024-05-08T16:03:04.476Z",
+    updatedAt: "2024-05-08T16:03:04.476Z",
+  },
+  {
+    id: "9f46119a-e79f-458c-9900-a3403776d9f7",
+    name: "Jamie Wolfe",
+    description: "Et et voluptatem",
+    price: 782,
+    stock: 62,
+    imageUrl: null,
+    categoryId: "6292c443-f70a-4429-9533-a66406700f64",
+    status: "PENDING",
+    createdAt: "2024-07-20T14:34:28.562Z",
+    updatedAt: "2024-07-20T14:34:28.562Z",
+  },
+  {
+    id: "655f9391-0707-4b75-b8cf-65566534f79d",
+    name: "Raymond Wagner",
+    description: "Quia doloribus molestiae",
+    price: 916,
+    stock: 84,
+    imageUrl: null,
+    categoryId: "71533583-875d-4bb1-8a94-1b333725967e",
+    status: "ACTIVE",
+    createdAt: "2024-09-23T19:33:53.717Z",
+    updatedAt: "2024-09-23T19:33:53.717Z",
+  },
+];
+export default function ListProduct({ arrayProduct }: ListProductProps) {
+  const list = arrayProduct.slice(0, 5);
+  const [products, setProducts] = useState<ProductItem[]>(list ?? MockProducts);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      if (!token) return;
+    setProducts(arrayProduct.slice(0, 5));
+  }, [arrayProduct]);
 
-      try {
-        setLoading(true);
-        setError(null);
-
-        const response = await ApiRequest.getInstance().getProducts(token);
-
-        if (response && response.data) {
-          setProducts(response.data);
-        } else {
-          throw new Error("No data received from API");
-        }
-      } catch (err) {
-        setError("Failed to fetch products. Please try again.");
-        console.error("Fetch error:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, [token]);
-
-  useEffect(() => {
-    const total = products.reduce((sum, product) => sum + product.price, 0);
-    setTotalBalance(total);
-  }, [products]);
+  // Tính tổng giá trị sản phẩm
+  const totalBalance = products.reduce(
+    (sum, product) => sum + product.price,
+    0
+  );
 
   return (
     <div
       className={cn(
         "w-full max-w-xl mx-auto bg-white dark:bg-zinc-900/70",
         "border border-zinc-100 dark:border-zinc-800",
-        "rounded-xl shadow-sm backdrop-blur-xl",
-        className
+        "rounded-xl shadow-sm backdrop-blur-xl"
       )}
     >
+      {/* Header */}
       <div className="p-4 border-b border-zinc-100 dark:border-zinc-800">
         <p className="text-xs text-zinc-600 dark:text-zinc-400">Total Value</p>
         <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
@@ -100,21 +127,15 @@ export default function ListProduct({ className }: ListProductProps) {
         </h1>
       </div>
 
+      {/* Product List */}
       <div className="p-3">
         <h2 className="text-xs font-medium text-zinc-900 dark:text-zinc-100 mb-2">
           Your Products
         </h2>
-        {loading ? (
-          <p className="text-xs text-center">Loading products...</p>
-        ) : error ? (
-          <p className="text-xs text-red-500 text-center">{error}</p>
-        ) : products.length === 0 ? (
-          <p className="text-xs text-center text-zinc-600 dark:text-zinc-400">
-            No products available.
-          </p>
-        ) : (
-          <div className="space-y-1">
-            {products.map((product) => (
+
+        <div className="space-y-1">
+          {products.length > 0 ? (
+            products.map((product) => (
               <div
                 key={product.id}
                 className="group flex items-center justify-between p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-all duration-200"
@@ -142,28 +163,14 @@ export default function ListProduct({ className }: ListProductProps) {
                   </span>
                 </div>
               </div>
-            ))}
-          </div>
-        )}
+            ))
+          ) : (
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 text-center py-2">
+              No products available.
+            </p>
+          )}
+        </div>
       </div>
-
-      {/* <div className="p-2 border-t border-zinc-100 dark:border-zinc-800 grid grid-cols-4 gap-2">
-        {[
-          { icon: Plus, label: "Add" },
-          { icon: ShoppingCart, label: "Buy" },
-          { icon: CreditCard, label: "Pay" },
-          { icon: ArrowRight, label: "More" },
-        ].map(({ icon: Icon, label }) => (
-          <button
-            key={label}
-            type="button"
-            className="flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-medium bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-200 shadow-sm hover:shadow transition-all duration-200"
-          >
-            <Icon className="w-3.5 h-3.5" />
-            <span>{label}</span>
-          </button>
-        ))}
-      </div> */}
     </div>
   );
 }

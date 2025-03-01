@@ -1,7 +1,7 @@
 import { ChartArea } from "@/app/components/chart-area";
-import { fetchToken } from "@/app/dashboard-archive/product/fetchProduct";
-import ProductCRUD from "@/app/dashboard-archive/product/ProductForm";
-import ProductListPagination from "@/app/dashboardtest/product/ProductList";
+import { fetchToken } from "@/app/noooo/product/fetchProduct";
+import ProductCRUD from "@/app/noooo/product/ProductForm";
+import ProductListPagination from "@/app/dashboard/product/ProductList";
 
 export const ProductPage = async () => {
   const token = await fetchToken();
@@ -29,7 +29,7 @@ export const ProductPage = async () => {
           <ChartArea dataFromFetch={arrayList} />
         </div>
         <div className="col-span-4 row-span-4 row-start-3">
-          <ProductListPagination />
+          <ProductListPagination dataFromFetch={arrayList} />
         </div>
       </div>
     </>

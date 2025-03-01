@@ -25,13 +25,14 @@ import {
   PaginationNext,
 } from "@/components/ui/pagination";
 
-import { DiaLogUser } from "@/app/dashboardtest/user/DialogEditUser";
+import { DiaLogUser } from "@/app/dashboard/user/DialogEditUser";
 import { toast } from "sonner";
 import { useState } from "react";
-import { DialogDeleteUser } from "@/app/dashboardtest/user/DiaLogDelete";
-import { DialogEditProd } from "@/app/dashboardtest/product/DialogEditProd";
-import { DialogDeleteProduct } from "@/app/dashboardtest/product/DiaLogDelete";
+import { DialogDeleteUser } from "@/app/dashboard/user/DiaLogDelete";
+import { DialogEditProd } from "@/app/dashboard/product/DialogEditProd";
+import { DialogDeleteProduct } from "@/app/dashboard/product/DiaLogDelete";
 import { StickyNote } from "lucide-react";
+import { categoryIDMap } from "@/app/dashboard/product/ProductForm";
 
 const mockProduct = [
   {
@@ -155,9 +156,8 @@ const mockProduct = [
     updatedAt: "2025-02-28T18:02:42.027Z",
   },
 ];
-const dataToMap = mockProduct;
 export default function ProductListPagination({ dataFromFetch }: any) {
-  console.log(dataFromFetch);
+  const dataToMap = dataFromFetch;
   const handleExtractId = (userId: number) => {
     console.log("User ID:", userId);
   };
@@ -196,21 +196,22 @@ export default function ProductListPagination({ dataFromFetch }: any) {
               <TableHead>Stock</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Category</TableHead>
-
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {dataToMap.map((product) => (
+            {dataToMap.map((product: any) => (
               <TableRow key={product.id}>
                 <TableCell>{product.name}</TableCell>
                 <TableCell>{product.description}</TableCell>
                 <TableCell>{product.price}</TableCell>
                 <TableCell>{product.stock}</TableCell>
                 <TableCell>{product.status}</TableCell>
-                <TableCell>{product.status}</TableCell>
-
-                <TableCell className="text-right flex m-2 space-x-3">
+                <TableCell>
+                  {categoryIDMap.find((cat) => cat.id === product.categoryId)
+                    ?.name || "Unknown"}
+                </TableCell>
+                <TableCell className="text-right ">
                   <DialogEditProd product={product} />
                   <DialogDeleteProduct product={product} />
                 </TableCell>

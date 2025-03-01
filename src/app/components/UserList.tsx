@@ -25,10 +25,10 @@ import {
   PaginationNext,
 } from "@/components/ui/pagination";
 
-import { DiaLogUser } from "@/app/dashboardtest/user/DialogEditUser";
+import { DiaLogUser } from "@/app/dashboard/user/DialogEditUser";
 import { toast } from "sonner";
 import { useState } from "react";
-import { DialogDeleteUser } from "@/app/dashboardtest/user/DiaLogDelete";
+import { DialogDeleteUser } from "@/app/dashboard/user/DiaLogDelete";
 
 const mockUsers = [
   {
