@@ -27,6 +27,7 @@ import { PasswordInput } from "@/components/ui/password-input";
 
 import { ApiRequest } from "@/app/apiRequest/apiRequest";
 import { useAuth } from "@/app/AuthProvider";
+import { useState } from "react";
 
 // Improved schema with additional validation rules
 const formSchema = z.object({
@@ -50,7 +51,7 @@ export default function LoginForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      await login(values.email, values.password); // Gọi login từ context
+      await login(values.email, values.password);
 
       toast.success("Login successful!");
 

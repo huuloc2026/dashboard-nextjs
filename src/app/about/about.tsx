@@ -1,33 +1,49 @@
-import AboutPreview from "@/app/about/About-ui";
-import Marquee from "@/app/components/Marquee";
+import HeroPreview from "@/app/about/About-ui";
+import Contact from "@/app/about/Contact";
+import KeyToSuccess from "@/app/about/Keytosuccess/KeyToSuccess";
+import StoryMission from "@/app/about/StoryMission";
+import TeamMember from "@/app/about/TeamMember";
+
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
 import React from "react";
 
 const About = () => {
   return (
     <>
-      <AboutPreview />
-      {/* <div className="space-x-10 p-2">
-        <Button asChild>
-          <Link href="/login">Login</Link>
-        </Button>
+      <main className="flex-1 md:py-5">
+        <div className="container space-y-12 px-4 md:px-6">
+          <div className="h-screen">
+            <HeroPreview />
+          </div>
+          {/* Section: Story & Mission */}
+          <div className="h-screen">
+            <StoryMission />
+          </div>
 
-        <Button asChild>
-          <Link href="/register">Register</Link>
-        </Button>
+          {/* Section: Team Members */}
 
-        <Button asChild>
-          <Link href="/resetpassword">Change Password</Link>
-        </Button>
-        <Button asChild>
-          <Link href="/me">me</Link>
-        </Button>
-        <Button asChild>
-          <Link href="/verify">verify</Link>
-        </Button>
-      </div> */}
+          <div className="h-screen">
+            <TeamMember />
+          </div>
+          <main className="h-screen">
+            <div className="grid grid-cols-6 grid-rows-6 gap-4 w-full h-full">
+              <div className="col-span-2 row-span-6 flex justify-center items-center">
+                <KeyToSuccess />
+              </div>
+              <div className="col-span-2 row-span-6 col-start-3 flex justify-center items-center">
+                <KeyToSuccess />
+              </div>
+              <div className="col-span-2 row-span-6 col-start-5 flex justify-center items-center">
+                <KeyToSuccess />
+              </div>
+            </div>
+          </main>
+          <div className="h-screen">
+            <Contact />
+          </div>
+        </div>
+      </main>
     </>
   );
 };

@@ -60,7 +60,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const api = ApiRequest.getInstance();
       const data = await api.login(email, password);
-      console.log(data.token);
       setToken(data.token);
       // Fetch lại user mới
       const userData = await httpClient(

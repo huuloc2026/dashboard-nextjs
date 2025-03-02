@@ -6,7 +6,7 @@ export default function AboutLayoutRoot({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="flex min-h-[60vh] h-full w-full items-center justify-center px-4">
+    <main className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
       {children}
     </main>
   );
