@@ -48,7 +48,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(userData);
         setToken(data.token);
       } catch (error) {
-        console.error("Not logged in");
         setToken(null);
         setUser(null);
       }
@@ -70,7 +69,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       );
       setUser(userData);
     } catch (error) {
-      console.error("Login failed:", error);
       throw error;
     }
   }

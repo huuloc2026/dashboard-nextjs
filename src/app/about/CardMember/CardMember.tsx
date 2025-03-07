@@ -7,11 +7,14 @@ interface CardMemberProps {
 }
 const CardMember: React.FC<CardMemberProps> = ({ name, role }) => {
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center rounded-xl p-4">
+    <div className="  items-center justify-center rounded-xl p-4">
       <div className="CardMember">
         <div className="card">
-          <p className="heading">{name}</p>
-          <p>{role}</p>
+          <div>
+            <img src="https://static.vecteezy.com/system/resources/previews/009/397/835/non_2x/man-avatar-clipart-illustration-free-png.png" />
+            <p className="heading">{name}</p>
+            <p className="">{role}</p>
+          </div>
         </div>
       </div>
     </div>

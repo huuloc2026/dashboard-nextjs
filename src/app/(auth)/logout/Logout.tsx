@@ -13,9 +13,7 @@ const Logout = () => {
       });
 
       router.push("/login"); // Chuyển hướng về trang đăng nhập
-    } catch (error) {
-      console.error("Logout failed", error);
-    }
+    } catch (error) {}
   };
 
   return <button onClick={handleLogout}>Logout</button>;

@@ -13,20 +13,20 @@ const About = () => {
     <>
       <main className="flex-1 md:py-5">
         <div className="container space-y-12 px-4 md:px-6">
-          <div className="h-screen">
+          <div className="">
             <HeroPreview />
           </div>
           {/* Section: Story & Mission */}
-          <div className="h-screen">
+          <div className="">
             <StoryMission />
           </div>
 
           {/* Section: Team Members */}
 
-          <div className="h-screen">
+          <div className="">
             <TeamMember />
           </div>
-          <main className="h-screen">
+          <main className="">
             <div className="grid grid-cols-6 grid-rows-6 gap-4 w-full h-full">
               <div className="col-span-2 row-span-6 flex justify-center items-center">
                 <KeyToSuccess />

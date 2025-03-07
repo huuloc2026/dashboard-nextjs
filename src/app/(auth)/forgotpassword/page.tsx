@@ -41,7 +41,6 @@ export default function ForgetPasswordPreview() {
       // Assuming a function to send reset email
       toast.success("Password reset email sent. Please check your inbox.");
     } catch (error) {
-      console.error("Error sending password reset email", error);
       toast.error("Failed to send password reset email. Please try again.");
     }
   }

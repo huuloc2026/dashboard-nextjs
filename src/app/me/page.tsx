@@ -1,6 +1,7 @@
 import AlertDialogWithIcon from "@/app/components/DiaLogShow";
 import { fetchProfile } from "@/app/me/fetchProfile";
 import Profile from "@/app/me/Profile";
+import ImageAvatar from "@/app/me/Test";
 import TestOke from "@/app/me/TestOke";
 
 import React from "react";
@@ -12,6 +13,7 @@ const ProfilePage = async () => {
     <>
       <div className="text-white">
         Hello, {data.name}
+        <ImageAvatar />
         <TestOke />
         <AlertDialogWithIcon
           title="Delete Item"

@@ -54,7 +54,6 @@ export default function ResetPasswordPreview() {
         "Password reset successful. You can now log in with your new password."
       );
     } catch (error) {
-      console.error("Error resetting password", error);
       toast.error("Failed to reset the password. Please try again.");
     }
   }

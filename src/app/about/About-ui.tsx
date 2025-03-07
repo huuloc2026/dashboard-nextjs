@@ -1,3 +1,4 @@
+import CardDemoHero from "@/app/about/CardDemoHero/CardDemoHero";
 import Link from "next/link";
 import React from "react";
 
@@ -12,6 +13,11 @@ const HeroPreview = () => {
           We&apos;re on a mission to help teams build, deploy, and scale the
           best web experiences.
         </p>
+        <div className="flex justify-center gap-4">
+          {/* <CardDemoHero />
+          <CardDemoHero />
+          <CardDemoHero /> */}
+        </div>
       </div>
     </>
   );

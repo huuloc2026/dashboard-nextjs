@@ -88,7 +88,6 @@ export async function httpClient<T = any>(
     if (error.name === "AbortError") {
       throw new Error("Request timed out");
     }
-    console.error("API Error:", error.message);
     throw error;
   }
 }
